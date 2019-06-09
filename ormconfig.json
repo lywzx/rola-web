@@ -8,5 +8,7 @@
   "database": "rola-web",
   "entities": ["src/**/*.entity{.ts,.js}"],
   "synchronize": true,
-  "entityPrefix": "ly_"
+  "entityPrefix": "ly_",
+  "seeds": ["seeds/**/*.seed.ts"],
+  "factories": ["factories/**/*.factory.ts"]
 }

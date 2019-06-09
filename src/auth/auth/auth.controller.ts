@@ -1,10 +1,9 @@
-import {Body, Controller, Get, Post, Req, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, Post, Req, UseGuards, ValidationPipe} from '@nestjs/common';
 import {AuthService} from './auth.service';
 import {User} from '../user.entity';
 import {AuthGuard} from '@nestjs/passport';
 import { Request } from 'express';
 import {UserService} from '../user/user.service';
-import {ValidationPipe} from '../validation.pipe';
 import {RegistryUserDto} from '../dto/registry-user.dto';
 
 @Controller('auth')
@@ -22,8 +21,11 @@ export class AuthController {
   }
 
   @Post('register')
-  async register(@Body(new ValidationPipe()) registryUserDto: RegistryUserDto): Promise<any> {
-    return this.authService.registry(registryUserDto as User);
+  async register(@Body(new ValidationPipe({transform: true})) registryUserDto: RegistryUserDto): Promise<any> {
+    const user = await this.authService.registry(registryUserDto as User);
+    return {
+      id: user.id,
+    };
   }
 
   @Get('user')
