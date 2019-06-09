@@ -1,5 +1,5 @@
 import {BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn} from 'typeorm';
-import * as crypto from 'crypto';
+import { createHmac } from 'crypto';
 
 @Entity()
 export class User {
@@ -12,10 +12,10 @@ export class User {
   @Column({default: '', comment: '用户头像'})
   avatar: string;
 
-  @Column({unique: true, nullable: true, comment: '登录用户名，可以为null'})
+  @Column({unique: true, nullable: true, length: 191, comment: '登录用户名，可以为null'})
   'user_name': string;
 
-  @Column({default: '', nullable: true, comment: '用户邮箱，可以处理登录'})
+  @Column({default: '', nullable: true, length: 191, comment: '用户邮箱，可以处理登录'})
   email: string;
 
   @Column({comment: '登录密码'})
@@ -23,7 +23,7 @@ export class User {
 
   @BeforeInsert()
   hashPassword() {
-    this.password = crypto.createHmac('sha256', this.password).digest('hex');
+    this.password = createHmac('sha256', this.password).digest('hex');
   }
 
   @Column({type: 'timestamp'})

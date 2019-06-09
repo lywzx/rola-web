@@ -3,8 +3,10 @@
   "host": "localhost",
   "port": 3306,
   "username": "root",
+  "debug": true,
   "password": "",
   "database": "rola-web",
   "entities": ["src/**/*.entity{.ts,.js}"],
-  "synchronize": true
+  "synchronize": true,
+  "entityPrefix": "ly_"
 }
