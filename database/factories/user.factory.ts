@@ -1,4 +1,4 @@
-import {User} from '../../auth/user.entity';
+import {User} from '../../src/auth/user.entity';
 import {define} from 'typeorm-seeding';
 import * as Faker from 'faker';
 

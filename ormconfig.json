@@ -3,12 +3,12 @@
   "host": "localhost",
   "port": 3306,
   "username": "root",
-  "debug": true,
+  "debug": false,
   "password": "",
   "database": "rola-web",
   "entities": ["src/**/*.entity{.ts,.js}"],
   "synchronize": true,
   "entityPrefix": "ly_",
-  "seeds": ["seeds/**/*.seed.ts"],
-  "factories": ["factories/**/*.factory.ts"]
+  "seeds": ["src/database/**/*.seed.ts"],
+  "factories": ["src/database/**/*.factory.ts"]
 }
