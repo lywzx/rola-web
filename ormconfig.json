@@ -3,7 +3,7 @@
   "host": "localhost",
   "port": 3306,
   "username": "root",
-  "debug": false,
+  "debug": true,
   "password": "",
   "database": "rola-web",
   "entities": ["src/**/*.entity{.ts,.js}"],
