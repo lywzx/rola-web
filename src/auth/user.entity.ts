@@ -1,5 +1,6 @@
 import {BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn} from 'typeorm';
 import { createHmac } from 'crypto';
+import {RolesEntity} from '../entity/roles.entity';
 
 @Entity()
 export class User {
@@ -41,4 +42,6 @@ export class User {
   updateCreatedAt() {
     this.created_at = new Date();
   }
+
+  roles: RolesEntity[];
 }
