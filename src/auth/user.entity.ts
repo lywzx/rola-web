@@ -1,10 +1,12 @@
-import {BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn} from 'typeorm';
+import {BeforeInsert, BeforeUpdate, Column, Entity, ManyToMany, PrimaryGeneratedColumn} from 'typeorm';
 import { createHmac } from 'crypto';
 import {RolesEntity} from '../entity/roles.entity';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({
+    unsigned: true,
+  })
   id: number;
 
   @Column({default: '', comment: '用户姓名'})
@@ -43,5 +45,6 @@ export class User {
     this.created_at = new Date();
   }
 
+  @ManyToMany(type => RolesEntity)
   roles: RolesEntity[];
 }

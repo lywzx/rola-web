@@ -7,7 +7,9 @@ import { SettingValueTypeOptions } from './options';
 })
 export class SettingsEntity {
 
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({
+    unsigned: true,
+  })
   id: number;
 
   @ManyToOne(type => User, {

@@ -5,10 +5,16 @@ import {Column, Entity, PrimaryColumn} from 'typeorm';
 })
 export class PermissionUserEntity {
 
-  @PrimaryColumn('int')
+  @PrimaryColumn({
+    type: 'int',
+    unsigned: true,
+  })
   'permission_id': number;
 
-  @PrimaryColumn('int')
+  @PrimaryColumn({
+    type: 'int',
+    unsigned: true,
+  })
   'user_id': number;
 
   @Column({

@@ -3,15 +3,18 @@ import {SpacesEntity} from './spaces.entity';
 import {BaseEntity} from './base.entity';
 
 @Entity({
-  name: 'environments',
+  name: 'environment',
 })
 @Unique(['space_id', 'name'])
 export class EnvironmentsEntity extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({
+    unsigned: true,
+  })
   id: number;
 
   @Column({
     type: 'int',
+    unsigned: true,
   })
   'space_id': number;
 

@@ -8,7 +8,9 @@ import {BaseEntity} from './base.entity';
 })
 export class RolesEntity extends BaseEntity {
 
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({
+    unsigned: true,
+  })
   id: number;
 
   @Column({

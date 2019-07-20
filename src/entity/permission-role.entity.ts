@@ -5,9 +5,15 @@ import {Column, Entity, PrimaryColumn, PrimaryGeneratedColumn} from 'typeorm';
 })
 export class PermissionRoleEntity {
 
-  @PrimaryColumn('int')
+  @PrimaryColumn({
+    type: 'int',
+    unsigned: true,
+  })
   'permission_id': number;
 
-  @PrimaryColumn('int')
+  @PrimaryColumn({
+    type: 'int',
+    unsigned: true,
+  })
   'role_id': number;
 }

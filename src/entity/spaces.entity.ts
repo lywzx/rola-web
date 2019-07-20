@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {User} from '../auth/user.entity';
 import {BaseEntity} from './base.entity';
 
@@ -7,27 +7,27 @@ import {BaseEntity} from './base.entity';
 })
 export class SpacesEntity extends BaseEntity {
 
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({
+    unsigned: true,
+  })
   id: number;
 
   @Column({
     name: 'user_id',
     type: 'int',
+    unsigned: true,
     comment: 'creator id',
   })
-  @ManyToOne( type => User)
-  creator: User;
+  'user_id': number;
 
   @Column({
     name: 'owner_id',
     type: 'int',
+    unsigned: true,
     comment: 'space owner',
     nullable: true,
   })
-  @ManyToOne( type => User, {
-    nullable: true,
-  })
-  owner: number;
+  'owner_id': number;
 
   @Column({
     length: 60,
@@ -35,4 +35,19 @@ export class SpacesEntity extends BaseEntity {
   })
   name: string;
 
+  @ManyToOne( type => User)
+  @JoinColumn({
+    name: 'user_id',
+    referencedColumnName: 'id',
+  })
+  creator: User;
+
+  @ManyToOne( type => User, {
+    nullable: true,
+  })
+  @JoinColumn({
+    name: 'owner_id',
+    referencedColumnName: 'id',
+  })
+  owner: number;
 }
