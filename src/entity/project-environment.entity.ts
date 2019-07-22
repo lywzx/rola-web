@@ -1,12 +1,15 @@
-import {Column, Entity, JoinColumn, JoinTable, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, Unique} from 'typeorm';
+import {Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, Unique} from 'typeorm';
 import {YesOrNo} from './options';
 import {ProjectsEntity} from './projects.entity';
+import {ProjectSettingFilesEntity} from './project-setting-files.entity';
+import {BaseEntity} from './base.entity';
+import {ProjectDeployEntity} from './project-deploy.entity';
 
 @Entity({
   name: 'project_environment',
 })
 @Unique(['project_id', 'environment_id'])
-export class ProjectEnvironmentEntity {
+export class ProjectEnvironmentEntity extends BaseEntity {
 
   @PrimaryGeneratedColumn({
     unsigned: true,
@@ -49,4 +52,21 @@ export class ProjectEnvironmentEntity {
     referencedColumnName: 'id',
   })
   project: ProjectsEntity;
+
+  @ManyToMany(type => ProjectSettingFilesEntity, settingFiles => settingFiles.projectEnvironments)
+  projectSettingFiles: ProjectSettingFilesEntity[];
+
+  @ManyToMany(type => ProjectDeployEntity)
+  @JoinTable({
+    name: 'project_environment_deploy',
+    joinColumn: {
+      name: 'project_deploy_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'project_environment_id',
+      referencedColumnName: 'id',
+    },
+  })
+  projectDeploys: ProjectDeployEntity[];
 }

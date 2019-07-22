@@ -20,14 +20,12 @@ export class ProjectsEntity extends BaseEntity {
   id: number;
 
   @Column({
-    type: 'int',
     unsigned: true,
   })
   'space_id': number;
 
   @Column({
     name: 'user_id',
-    type: 'int',
     unsigned: true,
     comment: 'creator id',
   })

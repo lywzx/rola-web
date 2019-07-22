@@ -14,6 +14,7 @@ export class PermissionsEntity extends BaseEntity {
   id: number;
 
   @Column({
+    unique: true,
     length: 60,
   })
   name: string;
@@ -25,6 +26,7 @@ export class PermissionsEntity extends BaseEntity {
 
   @Column({
     length: 300,
+    default: '',
   })
   description: string;
 

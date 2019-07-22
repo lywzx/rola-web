@@ -1,14 +1,17 @@
 import {Column} from 'typeorm';
 
 export class BaseEntity {
-  @Column({
-    type: 'timestamp',
-  })
-  'created_at': Date;
 
   @Column({
+    name: 'created_at',
+    type: 'timestamp',
+  })
+  createdAt: Date;
+
+  @Column({
+    name: 'updated_at',
     type: 'timestamp',
     nullable: true,
   })
-  'updated_at': Date;
+  updatedAt: Date;
 }

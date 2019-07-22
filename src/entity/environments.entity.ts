@@ -13,7 +13,6 @@ export class EnvironmentsEntity extends BaseEntity {
   id: number;
 
   @Column({
-    type: 'int',
     unsigned: true,
   })
   'space_id': number;

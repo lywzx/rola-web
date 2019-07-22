@@ -14,6 +14,7 @@ export class RolesEntity extends BaseEntity {
   id: number;
 
   @Column({
+    unique: true,
     length: 60,
     comment: 'role name',
   })

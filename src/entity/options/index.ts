@@ -25,3 +25,13 @@ export enum ProjectRepositoryOnlineLogo {
   tag,
   branch,
 }
+
+export enum ProjectDeployOptions {
+  before,
+  after,
+}
+
+export enum ProjectDeployShellTypeOptions {
+  up,
+  down,
+}
