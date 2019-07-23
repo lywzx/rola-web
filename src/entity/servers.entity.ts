@@ -50,6 +50,7 @@ export class ServersEntity extends BaseEntity {
   @Column({
     length: 300,
     default: '',
+    charset: 'utf8mb4',
   })
   description: string;
 

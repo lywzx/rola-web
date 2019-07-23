@@ -27,13 +27,16 @@ export class ProjectSettingFilesEntity extends BaseEntity {
 
   @Column({
     name: 'file_path',
+    length: 2000,
     comment: 'file path',
+    charset: 'utf8mb4',
   })
   filePath: string;
 
   @Column({
     type: 'text',
     comment: 'file content',
+    charset: 'utf8mb4',
   })
   content: string;
 

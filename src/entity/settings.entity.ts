@@ -22,13 +22,15 @@ export class SettingsEntity {
   user: User;
 
   @Column({
-    length: 90,
+    length: 191,
     unique: true,
+    charset: 'utf8mb4',
   })
   'setting_key': string;
 
   @Column({
     type: 'text',
+    charset: 'utf8mb4',
   })
   'setting_value': string;
 

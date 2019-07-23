@@ -48,6 +48,7 @@ export class ProjectDeployEntity {
   @Column({
     type: 'text',
     comment: 'shell content',
+    charset: 'utf8mb4',
   })
   'shell_content': string;
 

@@ -18,14 +18,13 @@ export class EnvironmentsEntity extends BaseEntity {
   'space_id': number;
 
   @Column({
-    type: 'varchar',
     length: 60,
   })
   name: string;
 
   @Column({
-    type: 'varchar',
     length: 200,
+    charset: 'utf8mb4',
     default: '',
   })
   'display_name': string;

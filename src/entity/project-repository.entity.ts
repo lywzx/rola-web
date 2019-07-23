@@ -36,16 +36,16 @@ export class ProjectRepositoryEntity extends BaseEntity {
     length: 300,
     default: '',
     comment: 'git or svn url',
+    charset: 'utf8mb4',
   })
   url: string;
 
   @Column({
-    name: 'online_logo',
     type: 'enum',
     enum: ProjectRepositoryOnlineLogo,
     comment: 'online mode',
   })
-  onlineLogo: ProjectRepositoryOnlineLogo;
+  'online_logo': ProjectRepositoryOnlineLogo;
 
   @Column({
     length: 30,
@@ -58,6 +58,7 @@ export class ProjectRepositoryEntity extends BaseEntity {
   @Column({
     length: 400,
     default: '',
+    charset: 'utf8mb4',
   })
   destination: string;
 

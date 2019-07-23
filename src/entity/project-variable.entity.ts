@@ -24,12 +24,14 @@ export class ProjectVariableEntity extends BaseEntity {
 
   @Column({
     length: 100,
+    charset: 'utf8mb4',
   })
   'display_name': string;
 
   @Column({
     length: 2000,
     default: '',
+    charset: 'utf8mb4',
   })
   'value': string;
 

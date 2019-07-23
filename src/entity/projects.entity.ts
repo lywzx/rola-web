@@ -33,7 +33,8 @@ export class ProjectsEntity extends BaseEntity {
 
   @Column({
     type: 'varchar',
-    length: 60,
+    length: 191,
+    charset: 'utf8mb4',
   })
   name: string;
 
@@ -41,6 +42,7 @@ export class ProjectsEntity extends BaseEntity {
     default: '',
     length: 300,
     comment: 'project description',
+    charset: 'utf8mb4',
   })
   description: string;
 

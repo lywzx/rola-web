@@ -7,11 +7,14 @@ import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
 import {JwtStrategy} from './jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
+import { RoleController } from './role/role.controller';
+import { RoleService } from './role/role.service';
+import {RolesEntity} from '../entity/roles.entity';
 
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, RolesEntity]),
     JwtModule.register({
       secret: 'secret1234567',
       signOptions: {
@@ -19,8 +22,8 @@ import { PassportModule } from '@nestjs/passport';
       },
     }),
   ],
-  providers: [UserService, AuthService, JwtStrategy],
-  controllers: [AuthController],
-  exports: [ ],
+  providers: [UserService, AuthService, JwtStrategy, RoleService],
+  controllers: [AuthController, RoleController],
+  exports: [  ],
 })
 export class AuthModule {}

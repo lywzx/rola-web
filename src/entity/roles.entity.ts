@@ -23,6 +23,7 @@ export class RolesEntity extends BaseEntity {
   @Column({
     length: 100,
     comment: 'role display name',
+    charset: 'utf8mb4',
     default: '',
   })
   'display_name': string;
@@ -30,6 +31,7 @@ export class RolesEntity extends BaseEntity {
   @Column({
     length: 300,
     comment: 'role description',
+    charset: 'utf8mb4',
     default: '',
   })
   description: string;

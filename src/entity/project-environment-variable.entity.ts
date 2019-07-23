@@ -31,6 +31,8 @@ export class ProjectEnvironmentVariableEntity {
   @Column({
     length: 2000,
     default: '',
+    type: 'varchar',
+    charset: 'utf8mb4',
   })
   'value': string;
 

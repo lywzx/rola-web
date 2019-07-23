@@ -32,6 +32,7 @@ export class SpacesEntity extends BaseEntity {
   @Column({
     length: 60,
     comment: 'space name',
+    charset: 'utf8mb4',
   })
   name: string;
 

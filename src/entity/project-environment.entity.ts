@@ -33,9 +33,9 @@ export class ProjectEnvironmentEntity extends BaseEntity {
   name: string;
 
   @Column({
-    type: 'varchar',
     length: 200,
     default: '',
+    charset: 'utf8mb4',
   })
   'display_name': string;
 
