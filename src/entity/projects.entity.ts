@@ -3,11 +3,14 @@ import {SpacesEntity} from './spaces.entity';
 import {BaseEntity} from './base.entity';
 import {User} from '../auth/user.entity';
 import {YesOrNo, ProjectStatusOptions} from './options';
-import {EnvironmentsEntity} from './environments.entity';
 import {ServersEntity} from './servers.entity';
 import {ProjectRepositoryEntity} from './project-repository.entity';
 import {ProjectEnvironmentEntity} from './project-environment.entity';
 import {ProjectDeployEntity} from './project-deploy.entity';
+import {IsIn, IsInt, IsNotEmpty, IsOptional, IsString, MaxLength, Min} from 'class-validator';
+import { CrudValidationGroups } from '@nestjsx/crud';
+
+const [ CREATE, UPDATE ] = CrudValidationGroups;
 
 @Entity({
   name: 'project',
@@ -19,6 +22,9 @@ export class ProjectsEntity extends BaseEntity {
   })
   id: number;
 
+  @IsOptional({ groups: [ UPDATE ]})
+  @IsInt()
+  @Min(0)
   @Column({
     unsigned: true,
   })
@@ -31,6 +37,10 @@ export class ProjectsEntity extends BaseEntity {
   })
   'user_id': number;
 
+  @IsOptional({ groups: [UPDATE]})
+  @IsNotEmpty()
+  @IsString({ always: true})
+  @MaxLength(191)
   @Column({
     type: 'varchar',
     length: 191,
@@ -38,6 +48,9 @@ export class ProjectsEntity extends BaseEntity {
   })
   name: string;
 
+  @IsOptional()
+  @IsString({ always: true})
+  @MaxLength(300)
   @Column({
     default: '',
     length: 300,
@@ -46,17 +59,23 @@ export class ProjectsEntity extends BaseEntity {
   })
   description: string;
 
+  @IsOptional()
+  @IsIn([ProjectStatusOptions.lock, ProjectStatusOptions.ok])
   @Column({
     type: 'enum',
     enum: ProjectStatusOptions,
     comment: 'project status',
+    default: ProjectStatusOptions.lock,
   })
   status: ProjectStatusOptions;
 
+  @IsOptional()
+  @IsIn([YesOrNo.yes, YesOrNo.no])
   @Column({
     type: 'enum',
     enum: YesOrNo,
     comment: 'Need to be reviewed before going online',
+    default: YesOrNo.yes,
   })
   'require_review': YesOrNo;
 

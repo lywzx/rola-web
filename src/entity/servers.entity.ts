@@ -3,7 +3,10 @@ import {BaseEntity} from './base.entity';
 import {SpacesEntity} from './spaces.entity';
 import {User} from '../auth/user.entity';
 import {YesOrNo} from './options';
+import {IsIn, IsInt, IsIP, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, Min} from 'class-validator';
+import { CrudValidationGroups } from '@nestjsx/crud';
 
+const [CREATE, UPDATE] = CrudValidationGroups;
 @Entity({
   name: 'server',
 })
@@ -18,35 +21,55 @@ export class ServersEntity extends BaseEntity {
   })
   'user_id': number;
 
+  @IsOptional({ groups: [UPDATE]})
+  @IsNotEmpty()
+  @IsString({ always: true})
+  @MaxLength(60)
   @Column({
     length: 60,
   })
   name: string;
 
+  @IsOptional({ groups: [UPDATE]})
+  @IsNotEmpty()
+  @IsIP()
   @Column({
     type: 'int',
     unsigned: true,
   })
   'ip_address': number;
 
+  @IsOptional({ groups: [UPDATE] })
+  @IsNotEmpty()
+  @IsInt()
+  @Min(1)
   @Column({
     type: 'smallint',
     unsigned: true,
   })
   'ssh_port': number;
 
+  @IsOptional()
+  @IsString()
+  @Matches(/^[a-zA-Z][a-zA-Z0-9_]{2,59}$/)
   @Column({
-    type: 'varchar',
+    length: 60,
     nullable: true,
   })
   'ssh_user': string;
 
+  @IsOptional()
+  @IsString()
+  @MaxLength(62)
   @Column({
     length: 62,
     nullable: true,
   })
   'password': string;
 
+  @IsOptional()
+  @IsString({ always: true})
+  @MaxLength(300)
   @Column({
     length: 300,
     default: '',
@@ -54,9 +77,12 @@ export class ServersEntity extends BaseEntity {
   })
   description: string;
 
+  @IsOptional()
+  @IsIn([YesOrNo.yes, YesOrNo.no])
   @Column({
     type: 'enum',
     enum: YesOrNo,
+    default: YesOrNo.yes,
   })
   lock: YesOrNo;
 

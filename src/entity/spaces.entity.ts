@@ -1,6 +1,7 @@
 import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {User} from '../auth/user.entity';
 import {BaseEntity} from './base.entity';
+import {IsOptional} from 'class-validator';
 
 @Entity({
   name: 'space',
@@ -20,12 +21,12 @@ export class SpacesEntity extends BaseEntity {
   })
   'user_id': number;
 
+  @IsOptional()
   @Column({
     name: 'owner_id',
-    type: 'int',
     unsigned: true,
-    comment: 'space owner',
     nullable: true,
+    comment: 'space owner',
   })
   'owner_id': number;
 
