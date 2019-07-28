@@ -3,10 +3,13 @@ import {BaseEntity} from './base.entity';
 import {SpacesEntity} from './spaces.entity';
 import {User} from '../auth/user.entity';
 import {YesOrNo} from './options';
-import {IsIn, IsInt, IsIP, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, Min} from 'class-validator';
+import {
+  IsIn, IsInt, IsIP, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, Min,
+  ValidationOptions,
+} from 'class-validator';
 import { CrudValidationGroups } from '@nestjsx/crud';
 
-const [CREATE, UPDATE] = CrudValidationGroups;
+const {CREATE, UPDATE} = CrudValidationGroups;
 @Entity({
   name: 'server',
 })
@@ -21,7 +24,7 @@ export class ServersEntity extends BaseEntity {
   })
   'user_id': number;
 
-  @IsOptional({ groups: [UPDATE]})
+  @IsOptional({groups: [UPDATE]} as ValidationOptions)
   @IsNotEmpty()
   @IsString({ always: true})
   @MaxLength(60)
@@ -30,7 +33,7 @@ export class ServersEntity extends BaseEntity {
   })
   name: string;
 
-  @IsOptional({ groups: [UPDATE]})
+  @IsOptional({groups: [UPDATE]} as ValidationOptions)
   @IsNotEmpty()
   @IsIP()
   @Column({
@@ -39,7 +42,7 @@ export class ServersEntity extends BaseEntity {
   })
   'ip_address': number;
 
-  @IsOptional({ groups: [UPDATE] })
+  @IsOptional({groups: [UPDATE]} as ValidationOptions)
   @IsNotEmpty()
   @IsInt()
   @Min(1)

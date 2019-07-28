@@ -7,10 +7,10 @@ import {ServersEntity} from './servers.entity';
 import {ProjectRepositoryEntity} from './project-repository.entity';
 import {ProjectEnvironmentEntity} from './project-environment.entity';
 import {ProjectDeployEntity} from './project-deploy.entity';
-import {IsIn, IsInt, IsNotEmpty, IsOptional, IsString, MaxLength, Min} from 'class-validator';
+import {IsIn, IsInt, IsNotEmpty, IsOptional, IsString, MaxLength, Min, ValidationOptions} from 'class-validator';
 import { CrudValidationGroups } from '@nestjsx/crud';
 
-const [ CREATE, UPDATE ] = CrudValidationGroups;
+const { CREATE, UPDATE } = CrudValidationGroups;
 
 @Entity({
   name: 'project',
@@ -22,7 +22,7 @@ export class ProjectsEntity extends BaseEntity {
   })
   id: number;
 
-  @IsOptional({ groups: [ UPDATE ]})
+  @IsOptional({groups: [UPDATE]} as ValidationOptions)
   @IsInt()
   @Min(0)
   @Column({
@@ -37,7 +37,7 @@ export class ProjectsEntity extends BaseEntity {
   })
   'user_id': number;
 
-  @IsOptional({ groups: [UPDATE]})
+  @IsOptional({groups: [UPDATE]} as ValidationOptions)
   @IsNotEmpty()
   @IsString({ always: true})
   @MaxLength(191)

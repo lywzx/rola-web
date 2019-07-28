@@ -1,10 +1,10 @@
 import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique} from 'typeorm';
 import {SpacesEntity} from './spaces.entity';
 import {BaseEntity} from './base.entity';
-import {IsInt, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, Min} from 'class-validator';
+import {IsInt, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, Min, ValidationOptions} from 'class-validator';
 import { CrudValidationGroups } from '@nestjsx/crud';
 
-const [ CREATE, UPDATE ] = CrudValidationGroups;
+const { CREATE, UPDATE } = CrudValidationGroups;
 
 @Entity({
   name: 'environment',
@@ -16,7 +16,7 @@ export class EnvironmentsEntity extends BaseEntity {
   })
   id: number;
 
-  @IsOptional({ groups: [UPDATE] })
+  @IsOptional({groups: [UPDATE]} as ValidationOptions)
   @IsInt()
   @Min(0)
   @Column({
@@ -24,7 +24,7 @@ export class EnvironmentsEntity extends BaseEntity {
   })
   'space_id': number;
 
-  @IsOptional({ groups: [UPDATE]})
+  @IsOptional({groups: [UPDATE]} as ValidationOptions)
   @IsNotEmpty()
   @IsString({ always: true})
   @MaxLength(60)
@@ -34,7 +34,7 @@ export class EnvironmentsEntity extends BaseEntity {
   })
   name: string;
 
-  @IsOptional({ groups: [UPDATE]})
+  @IsOptional({groups: [UPDATE]} as ValidationOptions)
   @IsNotEmpty()
   @IsString({ always: true})
   @MaxLength(200)

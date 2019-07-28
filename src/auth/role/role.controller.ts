@@ -2,7 +2,9 @@ import {Controller, Get, Post, Req} from '@nestjs/common';
 import {Crud, CrudController} from '@nestjsx/crud';
 import {RolesEntity} from '../../entity/roles.entity';
 import {RoleService} from './role.service';
+import { CrudValidationGroups } from '@nestjsx/crud';
 
+const {CREATE, UPDATE} = CrudValidationGroups;
 @Crud({
   model: {
     type: RolesEntity,

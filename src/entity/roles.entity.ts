@@ -6,6 +6,9 @@ import {IsNotEmpty, IsOptional, IsString, Matches, MaxLength, ValidationOptions,
 import { CrudValidationGroups } from '@nestjsx/crud';
 
 const { CREATE, UPDATE } = CrudValidationGroups;
+const validateWithCreateAndUpdateGroup = {
+  groups: [CREATE, UPDATE],
+} as ValidationOptions;
 
 @Entity({
   name: 'role',
@@ -18,10 +21,16 @@ export class RolesEntity extends BaseEntity {
   id: number;
 
   @IsOptional({groups: [UPDATE]} as ValidationOptions)
-  @IsNotEmpty()
-  @IsString({ always: true})
-  @MaxLength(60, {always: true})
-  @Matches(/^[a-zA-Z][a-zA-Z0-9_]{2,59}$/)
+  @IsNotEmpty(validateWithCreateAndUpdateGroup)
+  @IsString({
+    ...validateWithCreateAndUpdateGroup,
+    always: true,
+  })
+  @MaxLength(60, {
+    ...validateWithCreateAndUpdateGroup,
+    always: true,
+  })
+  @Matches(/^[a-zA-Z][a-zA-Z0-9_]{2,59}$/, validateWithCreateAndUpdateGroup)
   @Column({
     unique: true,
     length: 60,
@@ -30,9 +39,12 @@ export class RolesEntity extends BaseEntity {
   name: string;
 
   @IsOptional({groups: [UPDATE]} as ValidationOptions)
-  @IsNotEmpty()
-  @IsString({ always: true })
-  @MaxLength(100)
+  @IsNotEmpty(validateWithCreateAndUpdateGroup)
+  @IsString({
+    ...validateWithCreateAndUpdateGroup,
+    always: true,
+  })
+  @MaxLength(100, validateWithCreateAndUpdateGroup)
   @Column({
     length: 100,
     comment: 'role display name',
@@ -41,10 +53,13 @@ export class RolesEntity extends BaseEntity {
   })
   'display_name': string;
 
-  @IsOptional()
-  @IsNotEmpty()
-  @IsString({ always: true})
-  @MaxLength(300)
+  @IsOptional(validateWithCreateAndUpdateGroup)
+  @IsNotEmpty(validateWithCreateAndUpdateGroup)
+  @IsString({
+    ...validateWithCreateAndUpdateGroup,
+    always: true,
+  })
+  @MaxLength(300, validateWithCreateAndUpdateGroup)
   @Column({
     length: 300,
     comment: 'role description',

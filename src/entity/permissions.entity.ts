@@ -5,7 +5,7 @@ import {BaseEntity} from './base.entity';
 import {IsNotEmpty, IsOptional, IsString, Matches, MaxLength, ValidationOptions} from 'class-validator';
 import { CrudValidationGroups } from '@nestjsx/crud';
 
-const [CREATE, UPDATE] = CrudValidationGroups;
+const {CREATE, UPDATE} = CrudValidationGroups;
 
 @Entity({
   name: 'permission',
@@ -17,7 +17,7 @@ export class PermissionsEntity extends BaseEntity {
   })
   id: number;
 
-  @IsOptional({ groups: [UPDATE]})
+  @IsOptional({groups: [UPDATE]} as ValidationOptions)
   @IsNotEmpty()
   @IsString({ always: true})
   @MaxLength(60, {always: true})

@@ -5,7 +5,7 @@
   "username": "root",
   "logging": true,
   "debug": true,
-  "password": "",
+  "password": "root",
   "database": "rola-web",
   "entities": [
     "src/**/*.entity{.ts,.js}",
