@@ -1,5 +1,5 @@
 import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
-import {User} from '../auth/user.entity';
+import {UserEntity} from './user.entity';
 import { SettingValueTypeOptions } from './options';
 
 @Entity({
@@ -12,14 +12,14 @@ export class SettingsEntity {
   })
   id: number;
 
-  @ManyToOne(type => User, {
+  @ManyToOne(type => UserEntity, {
     nullable: true,
   })
   @JoinColumn({
     name: 'user_id',
     referencedColumnName: 'id',
   })
-  user: User;
+  user: UserEntity;
 
   @Column({
     length: 191,

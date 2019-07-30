@@ -1,14 +1,14 @@
 import {HttpException, Injectable} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
-import {User} from '../user.entity';
+import { UserEntity } from '../../entity/user.entity';
 import {FindOneOptions, Repository} from 'typeorm';
 import { createHmac } from 'crypto';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectRepository(User) private userRepository: Repository<User>) {}
+  constructor(@InjectRepository(UserEntity) private userRepository: Repository<UserEntity>) {}
 
-  async login(user: Partial<User>): Promise<User> {
+  async login(user: Partial<UserEntity>): Promise<UserEntity> {
     const nUser = user.email ? await this.findByEmail(user.email) : await this.findByUserName(user.user_name);
 
     if (!nUser) {
@@ -22,7 +22,7 @@ export class UserService {
     return nUser;
   }
 
-  async findByEmail(email: string): Promise<User> {
+  async findByEmail(email: string): Promise<UserEntity> {
     return await this.userRepository.findOne({
       where: {
         email,
@@ -30,7 +30,7 @@ export class UserService {
     });
   }
 
-  async findByUserName(username: string): Promise<User> {
+  async findByUserName(username: string): Promise<UserEntity> {
     return await this.userRepository.findOne({
       where: {
         user_name: username,
@@ -38,8 +38,8 @@ export class UserService {
     });
   }
 
-  async findById(id: number, select?: Array<keyof User>, cache?: number): Promise<User> {
-    const options: FindOneOptions<User> = {
+  async findById(id: number, select?: Array<keyof UserEntity>, cache?: number): Promise<UserEntity> {
+    const options: FindOneOptions<UserEntity> = {
       where: {
         id,
       },
@@ -53,7 +53,7 @@ export class UserService {
     return this.userRepository.findOne(options);
   }
 
-  async create(user: User): Promise<User> {
+  async create(user: UserEntity): Promise<UserEntity> {
     return await this.userRepository.save(this.userRepository.create(user));
   }
 

@@ -1,9 +1,10 @@
 import {Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from 'typeorm';
-import {User} from '../auth/user.entity';
+import {UserEntity} from './user.entity';
 import {PermissionsEntity} from './permissions.entity';
 import {BaseEntity} from './base.entity';
-import {IsNotEmpty, IsOptional, IsString, Matches, MaxLength, ValidationOptions, IsByteLength} from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, Matches, MaxLength, ValidationOptions, IsByteLength} from 'class-validator';
 import { CrudValidationGroups } from '@nestjsx/crud';
+import { UniqueEntity } from '../validator/UniqueEntityConstraint';
 
 const { CREATE, UPDATE } = CrudValidationGroups;
 const validateWithCreateAndUpdateGroup = {
@@ -29,6 +30,11 @@ export class RolesEntity extends BaseEntity {
   @MaxLength(60, {
     ...validateWithCreateAndUpdateGroup,
     always: true,
+  })
+  @UniqueEntity({
+    table: 'role',
+  }, {
+    groups: [CREATE],
   })
   @Matches(/^[a-zA-Z][a-zA-Z0-9_]{2,59}$/, validateWithCreateAndUpdateGroup)
   @Column({
@@ -68,7 +74,7 @@ export class RolesEntity extends BaseEntity {
   })
   description: string;
 
-  @ManyToMany(type => User, user => user.roles, {
+  @ManyToMany(type => UserEntity, user => user.roles, {
     cascade: true,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
@@ -84,7 +90,7 @@ export class RolesEntity extends BaseEntity {
       referencedColumnName: 'id',
     },
   })
-  users: User[];
+  users: UserEntity[];
 
   @ManyToMany( type => PermissionsEntity, permission => permission.roles, {
     cascade: true,

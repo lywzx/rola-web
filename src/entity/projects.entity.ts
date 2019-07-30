@@ -1,7 +1,7 @@
 import {Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {SpacesEntity} from './spaces.entity';
 import {BaseEntity} from './base.entity';
-import {User} from '../auth/user.entity';
+import {UserEntity} from './user.entity';
 import {YesOrNo, ProjectStatusOptions} from './options';
 import {ServersEntity} from './servers.entity';
 import {ProjectRepositoryEntity} from './project-repository.entity';
@@ -89,7 +89,7 @@ export class ProjectsEntity extends BaseEntity {
   })
   space: SpacesEntity;
 
-  @ManyToOne( type => User, {
+  @ManyToOne( type => UserEntity, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
@@ -97,7 +97,7 @@ export class ProjectsEntity extends BaseEntity {
     name: 'user_id',
     referencedColumnName: 'id',
   })
-  creator: User;
+  creator: UserEntity;
 
   @OneToMany(type => ProjectEnvironmentEntity, projectEnvironment => projectEnvironment.display_name)
   /*@JoinTable({

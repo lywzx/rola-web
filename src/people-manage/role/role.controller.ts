@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Req} from '@nestjs/common';
+import {ArgumentMetadata, Controller, Get, Post, Req} from '@nestjs/common';
 import {Crud, CrudController} from '@nestjsx/crud';
 import {RolesEntity} from '../../entity/roles.entity';
 import {RoleService} from './role.service';
@@ -8,6 +8,9 @@ const {CREATE, UPDATE} = CrudValidationGroups;
 @Crud({
   model: {
     type: RolesEntity,
+  },
+  validation: {
+    transform: true,
   },
 })
 @Controller('role')

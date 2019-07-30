@@ -2,7 +2,7 @@ import {Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn}
 import {ProjectRepositoryOnlineLogo, ProjectRepositoryType} from './options';
 import {BaseEntity} from './base.entity';
 import {ProjectsEntity} from './projects.entity';
-import {User} from '../auth/user.entity';
+import {UserEntity} from './user.entity';
 
 @Entity({
   name: 'project_repository',
@@ -69,10 +69,10 @@ export class ProjectRepositoryEntity extends BaseEntity {
   })
   project: ProjectsEntity;
 
-  @ManyToOne( type1 => User)
+  @ManyToOne( type1 => UserEntity)
   @JoinColumn({
     name: 'user_id',
     referencedColumnName: 'id',
   })
-  user: User;
+  user: UserEntity;
 }

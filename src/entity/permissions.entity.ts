@@ -1,6 +1,6 @@
 import {Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {RolesEntity} from './roles.entity';
-import {User} from '../auth/user.entity';
+import {UserEntity} from './user.entity';
 import {BaseEntity} from './base.entity';
 import {IsNotEmpty, IsOptional, IsString, Matches, MaxLength, ValidationOptions} from 'class-validator';
 import { CrudValidationGroups } from '@nestjsx/crud';
@@ -52,7 +52,7 @@ export class PermissionsEntity extends BaseEntity {
   @ManyToMany(type => RolesEntity, role => role.permissions)
   roles: RolesEntity[];
 
-  @ManyToMany(type => User)
+  @ManyToMany(type => UserEntity)
   @JoinTable({
     name: 'permission_user',
     joinColumn: {
@@ -64,5 +64,5 @@ export class PermissionsEntity extends BaseEntity {
       referencedColumnName: 'id',
     },
   })
-  users: User[];
+  users: UserEntity[];
 }

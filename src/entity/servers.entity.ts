@@ -1,7 +1,7 @@
 import {Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {BaseEntity} from './base.entity';
 import {SpacesEntity} from './spaces.entity';
-import {User} from '../auth/user.entity';
+import {UserEntity} from './user.entity';
 import {YesOrNo} from './options';
 import {
   IsIn, IsInt, IsIP, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, Min,
@@ -103,7 +103,7 @@ export class ServersEntity extends BaseEntity {
   })
   spaces: SpacesEntity[];
 
-  @ManyToOne( type => User, {
+  @ManyToOne( type => UserEntity, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
@@ -111,5 +111,5 @@ export class ServersEntity extends BaseEntity {
     name: 'user_id',
     referencedColumnName: 'id',
   })
-  creator: User;
+  creator: UserEntity;
 }

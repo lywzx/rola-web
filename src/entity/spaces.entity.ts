@@ -1,5 +1,5 @@
 import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
-import {User} from '../auth/user.entity';
+import {UserEntity} from './user.entity';
 import {BaseEntity} from './base.entity';
 import {IsInt, IsNotEmpty, IsOptional, IsString, MaxLength, Min, ValidationOptions} from 'class-validator';
 import { CrudValidationGroups } from '@nestjsx/crud';
@@ -45,19 +45,19 @@ export class SpacesEntity extends BaseEntity {
   })
   name: string;
 
-  @ManyToOne( type => User)
+  @ManyToOne( type => UserEntity)
   @JoinColumn({
     name: 'user_id',
     referencedColumnName: 'id',
   })
-  creator: User;
+  creator: UserEntity;
 
-  @ManyToOne( type => User, {
+  @ManyToOne( type => UserEntity, {
     nullable: true,
   })
   @JoinColumn({
     name: 'owner_id',
     referencedColumnName: 'id',
   })
-  owner: number;
+  owner: UserEntity;
 }

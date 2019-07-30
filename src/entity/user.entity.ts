@@ -1,9 +1,10 @@
-import {BeforeInsert, BeforeUpdate, Column, Entity, ManyToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {BeforeInsert, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from 'typeorm';
 import { createHmac } from 'crypto';
-import {RolesEntity} from '../entity/roles.entity';
+import {RolesEntity} from './roles.entity';
+import {BaseEntity} from './base.entity';
 
 @Entity()
-export class User {
+export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn({
     unsigned: true,
   })
@@ -29,22 +30,17 @@ export class User {
     this.password = createHmac('sha256', this.password).digest('hex');
   }
 
-  @Column({type: 'timestamp'})
-  'created_at': Date;
-
-  @Column({type: 'timestamp', nullable: true})
-  'updated_at': Date;
-
-  @BeforeUpdate()
-  updateUpdatedAt() {
-    this.updated_at = new Date();
-  }
-
-  @BeforeInsert()
-  updateCreatedAt() {
-    this.created_at = new Date();
-  }
-
   @ManyToMany(type => RolesEntity)
+  @JoinTable({
+    name: 'role_user',
+    joinColumn: {
+      name: 'role_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+  })
   roles: RolesEntity[];
 }
