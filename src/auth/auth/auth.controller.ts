@@ -6,7 +6,7 @@ import { Request } from 'express';
 import {UserService} from '../user/user.service';
 import {RegistryUserDto} from '../dto/registry-user.dto';
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService, private readonly userService: UserService) {}
 
@@ -31,7 +31,6 @@ export class AuthController {
   @Get('user')
   @UseGuards(AuthGuard())
   async user(@Req() request: Request): Promise<any> {
-    // @ts-ignore
     return request.user;
   }
 }

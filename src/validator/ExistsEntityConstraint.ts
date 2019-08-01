@@ -1,7 +1,7 @@
 import {registerDecorator, ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface} from 'class-validator';
 import {UniqueEntityConstraintOptions} from './UniqueEntityConstraintOptions';
-import {getManager, ObjectLiteral} from 'typeorm';
-import {UniqueEntityConstraint} from './UniqueEntityConstraint';
+import {getManager} from 'typeorm';
+import {getWhereAndValue} from '../util/fn';
 
 @ValidatorConstraint({
   async: true,
@@ -62,31 +62,6 @@ export class ExistsEntityConstraint implements ValidatorConstraintInterface {
   }
 }
 
-function getWhereAndValue(where: ObjectLiteral, anchor = '=', values?: ObjectLiteral[]): [string, ObjectLiteral] {
-  if (values && values.length) {
-    const whereDep: string[] = [];
-    const whereValue = {};
-    // tslint:disable-next-line:forin
-    for (const i in where) {
-      let isRunBreak = false;
-      for (const k of values) {
-        if (i in k) {
-          isRunBreak = true;
-          whereDep.push(`${i} ${anchor} :${i}`);
-          whereValue[i] = k[where[i]];
-          break;
-        }
-      }
-      if (isRunBreak === false) {
-        whereDep.push(`${i} ${anchor} :${i}`);
-        whereValue[i] = '';
-      }
-    }
-    return [whereDep.join(' AND '), whereValue];
-  }
-  return [Object.keys(where).map(it => `${it} ${anchor} :${it}`).join(' AND '), where];
-}
-
 export function ExistsEntity(options: UniqueEntityConstraintOptions, validationOptions?: ValidationOptions) {
   return (object: {}, propertyName: string) => {
     registerDecorator({
@@ -96,7 +71,7 @@ export function ExistsEntity(options: UniqueEntityConstraintOptions, validationO
       options: validationOptions,
       propertyName,
       target: object.constructor,
-      validator: UniqueEntityConstraint,
+      validator: ExistsEntityConstraint,
     });
   };
 }

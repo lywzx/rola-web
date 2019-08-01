@@ -2,24 +2,38 @@ import {BeforeInsert, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedCol
 import { createHmac } from 'crypto';
 import {RolesEntity} from './roles.entity';
 import {BaseEntity} from './base.entity';
+import {
+  IsEmail,
+  IsEmpty,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUrl,
+  Matches,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
+import {UniqueEntity} from '../validator/UniqueEntityConstraint';
 
-@Entity()
+@Entity({
+  name: 'user',
+})
 export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn({
     unsigned: true,
   })
   id: number;
 
-  @Column({default: '', comment: '用户姓名'})
+  @Column({length: 30, default: '', comment: '用户姓名'})
   name: string;
 
-  @Column({default: '', comment: '用户头像'})
+  @Column({length: 400, default: '', comment: '用户头像'})
   avatar: string;
 
-  @Column({unique: true, nullable: true, length: 191, comment: '登录用户名，可以为null'})
+  @Column({unique: true, nullable: true, length: 80, comment: '登录用户名，可以为null'})
   'user_name': string;
 
-  @Column({default: '', nullable: true, length: 191, comment: '用户邮箱，可以处理登录'})
+  @Column({unique: true, nullable: true, length: 191, comment: '用户邮箱，可以处理登录'})
   email: string;
 
   @Column({comment: '登录密码'})

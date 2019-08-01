@@ -6,13 +6,13 @@ module.exports = {
   "username": "root",
   "logging": true,
   "debug": true,
-  "password": "",
+  "password": "root",
   "database": "rola-web",
   "entities": [
     "src/**/*.entity{.js,.ts}",
     "src/entity/*.entity{.js,.ts}"
   ],
-  "synchronize": true,
+  "synchronize": false,
   "entityPrefix": "ly_",
   "seeds": [
     "database/**/*.seed.ts"

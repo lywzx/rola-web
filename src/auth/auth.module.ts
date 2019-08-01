@@ -6,11 +6,11 @@ import {JwtModule} from '@nestjs/jwt';
 import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
 import {JwtStrategy} from './jwt.strategy';
-import { PassportModule } from '@nestjs/passport';
+import {PassportModule} from '../passport/passport.module';
 
 @Module({
   imports: [
-    PassportModule.register({ defaultStrategy: 'jwt' }),
+    PassportModule,
     TypeOrmModule.forFeature([UserEntity]),
     JwtModule.register({
       secret: 'secret1234567',

@@ -5,7 +5,6 @@ declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('api');
 
   const options = new DocumentBuilder()
     .setTitle('Cats example')
@@ -13,6 +12,7 @@ async function bootstrap() {
     .setBasePath('api')
     .setVersion('1.0')
     .addTag('cats')
+    .addBearerAuth('Authorization', 'header')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('swagger', app, document);
@@ -23,7 +23,6 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
-
   // @ts-ignore
   global.app = app;
 }

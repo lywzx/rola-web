@@ -4,8 +4,12 @@ import {UserEntity} from './user.entity';
 import {BaseEntity} from './base.entity';
 import {IsNotEmpty, IsOptional, IsString, Matches, MaxLength, ValidationOptions} from 'class-validator';
 import { CrudValidationGroups } from '@nestjsx/crud';
+import {UniqueEntity} from '../validator/UniqueEntityConstraint';
 
 const {CREATE, UPDATE} = CrudValidationGroups;
+const validateWithCreateAndUpdateGroup = {
+  groups: [CREATE, UPDATE],
+} as ValidationOptions;
 
 @Entity({
   name: 'permission',
@@ -18,10 +22,13 @@ export class PermissionsEntity extends BaseEntity {
   id: number;
 
   @IsOptional({groups: [UPDATE]} as ValidationOptions)
-  @IsNotEmpty()
-  @IsString({ always: true})
-  @MaxLength(60, {always: true})
-  @Matches(/^[a-zA-Z][a-zA-Z0-9_]{2,59}$/)
+  @IsNotEmpty(validateWithCreateAndUpdateGroup)
+  @IsString(validateWithCreateAndUpdateGroup)
+  @MaxLength(60, validateWithCreateAndUpdateGroup)
+  @Matches(/^[a-zA-Z][a-zA-Z0-9_]{2,59}$/, validateWithCreateAndUpdateGroup)
+  @UniqueEntity({
+    table: 'permission',
+  }, validateWithCreateAndUpdateGroup)
   @Column({
     unique: true,
     length: 60,
@@ -29,8 +36,8 @@ export class PermissionsEntity extends BaseEntity {
   name: string;
 
   @IsOptional({groups: [UPDATE]} as ValidationOptions)
-  @IsNotEmpty()
-  @IsString({ always: true })
+  @IsNotEmpty(validateWithCreateAndUpdateGroup)
+  @IsString(validateWithCreateAndUpdateGroup)
   @MaxLength(100)
   @Column({
     length: 100,
@@ -38,10 +45,10 @@ export class PermissionsEntity extends BaseEntity {
   })
   'display_name': string;
 
-  @IsOptional()
-  @IsNotEmpty()
-  @IsString({ always: true})
-  @MaxLength(300)
+  @IsOptional({always: true})
+  @IsNotEmpty(validateWithCreateAndUpdateGroup)
+  @IsString(validateWithCreateAndUpdateGroup)
+  @MaxLength(300, validateWithCreateAndUpdateGroup)
   @Column({
     length: 300,
     charset: 'utf8mb4',
