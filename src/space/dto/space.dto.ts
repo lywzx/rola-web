@@ -22,7 +22,6 @@ export class SpaceDto {
   'user_id'?: number;
 
   @Type(() => UserIdOnlyDto)
-  @IsDefined({always: true})
   @ValidateNested({always: true})
   @ApiModelPropertyOptional({ type: UserIdOnlyDto, isArray: false})
   owner: UserIdOnlyDto;

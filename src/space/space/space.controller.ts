@@ -1,5 +1,5 @@
 import {Controller, Req, SetMetadata, UseGuards} from '@nestjs/common';
-import {Crud, CrudController, CrudRequest, Override, ParsedBody, ParsedRequest} from '@nestjsx/crud';
+import {Crud, CrudController, CrudRequest, Override, ParsedBody, ParsedRequest, JoinOption} from '@nestjsx/crud';
 import {SpacesEntity} from '../../entity/spaces.entity';
 import {SpaceService} from './space.service';
 import {AuthGuard} from '@nestjs/passport';
@@ -12,6 +12,15 @@ import {SpaceDto} from '../dto/space.dto';
 @Crud({
   model: {
     type: SpacesEntity,
+  },
+  query: {
+    exclude: ['owner_id'],
+    join: {
+      owner: {
+        exclude: ['password'],
+        eager: false,
+      },
+    },
   },
 })
 @Controller('api/space')
