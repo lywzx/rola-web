@@ -6,7 +6,7 @@ module.exports = {
   "username": "root",
   "logging": true,
   "debug": true,
-  "password": "root",
+  "password": "",
   "database": "rola-web",
   "entities": [
     "src/**/*.entity{.js,.ts}",

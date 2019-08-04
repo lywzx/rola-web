@@ -5,7 +5,9 @@ import {AuthGuard} from '@nestjs/passport';
 import { Request } from 'express';
 import {UserService} from '../user/user.service';
 import {RegistryUserDto} from '../dto/registry-user.dto';
+import {ApiUseTags} from '@nestjs/swagger';
 
+@ApiUseTags('auth')
 @Controller('api/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService, private readonly userService: UserService) {}

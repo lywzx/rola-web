@@ -10,13 +10,18 @@ import {
 import { CrudValidationGroups } from '@nestjsx/crud';
 import {ApiModelProperty} from '@nestjs/swagger';
 import {TagsEntity} from './tags.entity';
-import {Type} from "class-transformer";
+import {NumericIp} from '../util/numericIp';
+import {
+  isString,
+  isNumber,
+} from 'lodash';
 
 const {CREATE, UPDATE} = CrudValidationGroups;
 @Entity({
   name: 'server',
 })
 export class ServersEntity extends BaseEntity {
+
   @PrimaryGeneratedColumn({
     unsigned: true,
   })
@@ -28,29 +33,47 @@ export class ServersEntity extends BaseEntity {
   'user_id': number;
 
   @IsOptional({groups: [UPDATE]} as ValidationOptions)
-  @IsNotEmpty()
+  @IsNotEmpty({always: true})
   @IsString({ always: true})
-  @MaxLength(60)
+  @MaxLength(60, {always: true})
   @ApiModelProperty()
   @Column({
     length: 60,
+    charset: 'utf8mb4',
   })
   name: string;
 
   @IsOptional({groups: [UPDATE]} as ValidationOptions)
-  @IsNotEmpty()
-  @IsIP()
-  @ApiModelProperty()
+  @IsNotEmpty({always: true})
+  @IsIP(undefined, {always: true})
   @Column({
-    type: 'int',
+    name: 'ip_address',
+    type: 'bigint',
     unsigned: true,
+    transformer: {
+      to(value: any) {
+        if (isString(value) && /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(value)) {
+          return NumericIp.inet_aton(value);
+        } else if (isNumber(value)) {
+          return value;
+        }
+        return 0;
+      },
+      from(value: any) {
+        if (isNumber(value) || /\d+/.test(value)) {
+          return NumericIp.inet_ntoa(value);
+        }
+        return '';
+      },
+    },
   })
-  'ip_address': number;
+  @ApiModelProperty()
+  'ip_address': string|number;
 
   @IsOptional({groups: [UPDATE]} as ValidationOptions)
-  @IsNotEmpty()
-  @IsInt()
-  @Min(1)
+  @IsNotEmpty({always: true})
+  @IsInt({always: true})
+  @Min(1, {always: true})
   @ApiModelProperty()
   @Column({
     type: 'smallint',
@@ -58,9 +81,10 @@ export class ServersEntity extends BaseEntity {
   })
   'ssh_port': number;
 
-  @IsOptional()
-  @IsString()
-  @Matches(/^[a-zA-Z][a-zA-Z0-9_]{2,59}$/)
+  @IsOptional({groups: [UPDATE]} as ValidationOptions)
+  @IsString({always: true})
+  @IsNotEmpty({always: true})
+  @Matches(/^[-a-zA-Z0-9_]{2,60}$/, {always: true})
   @ApiModelProperty()
   @Column({
     length: 60,
@@ -68,9 +92,9 @@ export class ServersEntity extends BaseEntity {
   })
   'ssh_user': string;
 
-  @IsOptional()
-  @IsString()
-  @MaxLength(62)
+  @IsOptional({always: true})
+  @IsString({always: true})
+  @MaxLength(62, {always: true})
   @ApiModelProperty()
   @Column({
     length: 62,
@@ -78,9 +102,9 @@ export class ServersEntity extends BaseEntity {
   })
   'password': string;
 
-  @IsOptional()
+  @IsOptional({always: true})
   @IsString({ always: true})
-  @MaxLength(300)
+  @MaxLength(300, {always: true})
   @ApiModelProperty()
   @Column({
     length: 300,

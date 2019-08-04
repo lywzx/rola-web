@@ -1,9 +1,15 @@
 import {Factory, Seed} from 'typeorm-seeding';
 import {Connection} from 'typeorm';
-import {User} from '../../src/auth/user.entity';
+import { UserEntity } from '../../src/entity/user.entity';
 
 export default class UserCreate implements Seed {
   public async seed(factory: Factory, connection: Connection): Promise<any> {
-    await factory(User)({}).seedMany(1);
+    const entityManage = connection.createEntityManager();
+    const user = await factory(UserEntity)({}).make();
+
+    const isExist = await entityManage.count(UserEntity, { user_name: user.user_name });
+    if (isExist === 0) {
+      await entityManage.save(user);
+    }
   }
 }
