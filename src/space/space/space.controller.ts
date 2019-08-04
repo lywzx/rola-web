@@ -14,7 +14,14 @@ import {SpaceDto} from '../dto/space.dto';
     type: SpacesEntity,
   },
   query: {
-    exclude: ['owner_id'],
+    exclude: ['owner_id', 'user_id'],
+    limit: 20,
+    sort: [
+      {
+        field: 'updated_at',
+        order: 'DESC',
+      },
+    ],
     join: {
       owner: {
         exclude: ['password'],

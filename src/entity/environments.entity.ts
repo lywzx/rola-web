@@ -1,8 +1,19 @@
 import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique} from 'typeorm';
 import {SpacesEntity} from './spaces.entity';
 import {BaseEntity} from './base.entity';
-import {IsInt, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, Min, ValidationOptions} from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Matches,
+  MaxLength,
+  ValidateNested,
+  ValidationOptions,
+} from 'class-validator';
 import { CrudValidationGroups } from '@nestjsx/crud';
+import {Type} from 'class-transformer';
+import {SpaceIdOnlyDto} from '../dto/space-id-only.dto';
+import {ApiModelProperty} from '@nestjs/swagger';
 
 const { CREATE, UPDATE } = CrudValidationGroups;
 
@@ -16,28 +27,27 @@ export class EnvironmentsEntity extends BaseEntity {
   })
   id: number;
 
-  @IsOptional({groups: [UPDATE]} as ValidationOptions)
-  @IsInt()
-  @Min(0)
   @Column({
     unsigned: true,
   })
   'space_id': number;
 
   @IsOptional({groups: [UPDATE]} as ValidationOptions)
-  @IsNotEmpty()
+  @IsNotEmpty({always: true})
   @IsString({ always: true})
-  @MaxLength(60)
-  @Matches(/^[a-zA-Z][a-zA-Z0-9_]{2,59}$/)
+  @MaxLength(60, {always: true})
+  @Matches(/^[a-zA-Z][a-zA-Z0-9_]{2,59}$/, {always: true})
+  @ApiModelProperty()
   @Column({
     length: 60,
   })
   name: string;
 
   @IsOptional({groups: [UPDATE]} as ValidationOptions)
-  @IsNotEmpty()
+  @IsNotEmpty({always: true})
   @IsString({ always: true})
-  @MaxLength(200)
+  @MaxLength(200, {always: true})
+  @ApiModelProperty()
   @Column({
     length: 200,
     charset: 'utf8mb4',
@@ -45,6 +55,10 @@ export class EnvironmentsEntity extends BaseEntity {
   })
   'display_name': string;
 
+  @IsOptional({groups: [UPDATE]} as ValidationOptions)
+  @Type(type => SpaceIdOnlyDto)
+  @ValidateNested({groups: [UPDATE]}  as ValidationOptions)
+  @ApiModelProperty()
   @ManyToOne(type => SpacesEntity, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',

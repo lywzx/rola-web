@@ -11,7 +11,15 @@ import {JwtModule} from '@nestjs/jwt';
 import {PassportModule} from '@nestjs/passport';
 import {UserService} from './auth/user/user.service';
 import {JwtStrategy} from './auth/jwt.strategy';
+import { ServerModule } from './server/server.module';
+import { CrudConfigService } from '@nestjsx/crud';
 
+CrudConfigService.load({
+  query: {
+    limit: 25,
+    cache: 2000,
+  },
+});
 @Module({
   imports: [
     JwtModule.register({
@@ -21,7 +29,7 @@ import {JwtStrategy} from './auth/jwt.strategy';
       },
     }),
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    AuthModule, TypeOrmModule.forRoot(), SpaceModule, EnvironmentModule, ProjectModule, PeopleManageModule],
+    AuthModule, TypeOrmModule.forRoot(), SpaceModule, EnvironmentModule, ProjectModule, PeopleManageModule, ServerModule],
   controllers: [AppController],
   providers: [AppService, UserService, JwtStrategy],
 })

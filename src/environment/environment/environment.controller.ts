@@ -9,6 +9,14 @@ import {ApiUseTags} from '@nestjs/swagger';
   model: {
     type: EnvironmentsEntity,
   },
+  query: {
+    join: {
+      space: {
+        eager: false,
+      },
+    },
+    exclude: ['space_id'],
+  },
 })
 @Controller('api/environment')
 export class EnvironmentController implements CrudController<EnvironmentsEntity> {

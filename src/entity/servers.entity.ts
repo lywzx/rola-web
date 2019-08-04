@@ -8,6 +8,9 @@ import {
   ValidationOptions,
 } from 'class-validator';
 import { CrudValidationGroups } from '@nestjsx/crud';
+import {ApiModelProperty} from '@nestjs/swagger';
+import {TagsEntity} from './tags.entity';
+import {Type} from "class-transformer";
 
 const {CREATE, UPDATE} = CrudValidationGroups;
 @Entity({
@@ -28,6 +31,7 @@ export class ServersEntity extends BaseEntity {
   @IsNotEmpty()
   @IsString({ always: true})
   @MaxLength(60)
+  @ApiModelProperty()
   @Column({
     length: 60,
   })
@@ -36,6 +40,7 @@ export class ServersEntity extends BaseEntity {
   @IsOptional({groups: [UPDATE]} as ValidationOptions)
   @IsNotEmpty()
   @IsIP()
+  @ApiModelProperty()
   @Column({
     type: 'int',
     unsigned: true,
@@ -46,6 +51,7 @@ export class ServersEntity extends BaseEntity {
   @IsNotEmpty()
   @IsInt()
   @Min(1)
+  @ApiModelProperty()
   @Column({
     type: 'smallint',
     unsigned: true,
@@ -55,6 +61,7 @@ export class ServersEntity extends BaseEntity {
   @IsOptional()
   @IsString()
   @Matches(/^[a-zA-Z][a-zA-Z0-9_]{2,59}$/)
+  @ApiModelProperty()
   @Column({
     length: 60,
     nullable: true,
@@ -64,6 +71,7 @@ export class ServersEntity extends BaseEntity {
   @IsOptional()
   @IsString()
   @MaxLength(62)
+  @ApiModelProperty()
   @Column({
     length: 62,
     nullable: true,
@@ -73,6 +81,7 @@ export class ServersEntity extends BaseEntity {
   @IsOptional()
   @IsString({ always: true})
   @MaxLength(300)
+  @ApiModelProperty()
   @Column({
     length: 300,
     default: '',
@@ -82,6 +91,7 @@ export class ServersEntity extends BaseEntity {
 
   @IsOptional()
   @IsIn([YesOrNo.yes, YesOrNo.no])
+  @ApiModelProperty()
   @Column({
     type: 'enum',
     enum: YesOrNo,
@@ -112,4 +122,18 @@ export class ServersEntity extends BaseEntity {
     referencedColumnName: 'id',
   })
   creator: UserEntity;
+
+  @ManyToMany(type => TagsEntity)
+  @JoinTable({
+    name: 'server_tag',
+    joinColumn: {
+      name: 'tag_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'server_id',
+      referencedColumnName: 'id',
+    },
+  })
+  tags: TagsEntity[];
 }
