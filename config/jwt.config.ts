@@ -1,7 +1,10 @@
 import { IJwtConfig } from '../src/interfaces/jwt-config.interface';
+import { env } from '../src/util/config';
+import {JwtModuleOptions} from '@nestjs/jwt';
 
-export const DEFAULT_JWT_CONFIG: IJwtConfig = {
-  authHeaderPrefix: 'JWT',
-  expirationDelta: '7 days',
-};
-export const JWT_CONFIG_TOKEN = 'JwtConfigToken';
+export default {
+  secret: env('JWT_SECRET_KEY', ''),
+  signOptions: {
+    expiresIn: env('JWT_EXPIRATION_DELTA', '7 days'),
+  },
+} as JwtModuleOptions;
