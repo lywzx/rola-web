@@ -9,10 +9,13 @@ import {PermissionService} from './permission/permission.service';
 import {RolesEntity} from '../entity/roles.entity';
 import {PermissionsEntity} from '../entity/permissions.entity';
 import {UserEntity} from '../entity/user.entity';
-import { PassportModule } from '../passport/passport.module';
+import {PassportModule} from '../passport.module';
 
 @Module({
-  imports: [ PassportModule, TypeOrmModule.forFeature([RolesEntity, PermissionsEntity, UserEntity])],
+  imports: [
+    PassportModule,
+    TypeOrmModule.forFeature([RolesEntity, PermissionsEntity, UserEntity]),
+  ],
   controllers: [UserController, RoleController, PermissionController],
   providers: [UserService, RoleService, PermissionService],
 })

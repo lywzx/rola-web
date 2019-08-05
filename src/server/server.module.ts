@@ -6,10 +6,13 @@ import {TypeOrmModule} from '@nestjs/typeorm';
 import { TagController } from './tag/tag.controller';
 import { TagService } from './tag/tag.service';
 import {TagsEntity} from '../entity/tags.entity';
-import {PassportModule} from '../passport/passport.module';
+import {PassportModule} from '../passport.module';
 
 @Module({
-  imports: [ TypeOrmModule.forFeature([ServersEntity, TagsEntity]), PassportModule],
+  imports: [
+    PassportModule,
+    TypeOrmModule.forFeature([ServersEntity, TagsEntity]),
+  ],
   controllers: [ServerController, TagController],
   providers: [ServerService, TagService ],
 })

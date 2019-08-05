@@ -6,15 +6,13 @@ import {INestApplication} from '@nestjs/common';
   }
 }*/
 declare global {
-  var app: INestApplication;
+  const app: INestApplication;
 
   namespace NodeJS {
-    var app: INestApplication;
+    const app: INestApplication;
 
     interface Global {
-      app: INestApplication
+      app: INestApplication;
     }
   }
 }
-
-
