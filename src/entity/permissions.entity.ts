@@ -63,11 +63,11 @@ export class PermissionsEntity extends BaseEntity {
   @JoinTable({
     name: 'permission_user',
     joinColumn: {
-      name: 'user_id',
+      name: 'permission_id',
       referencedColumnName: 'id',
     },
     inverseJoinColumn: {
-      name: 'permission_id',
+      name: 'user_id',
       referencedColumnName: 'id',
     },
   })

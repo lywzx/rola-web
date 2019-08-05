@@ -127,11 +127,11 @@ export class ServersEntity extends BaseEntity {
   @JoinTable({
     name: 'space_server',
     joinColumn: {
-      name: 'space_id',
+      name: 'server_id',
       referencedColumnName: 'id',
     },
     inverseJoinColumn: {
-      name: 'server_id',
+      name: 'space_id',
       referencedColumnName: 'id',
     },
   })
@@ -151,11 +151,11 @@ export class ServersEntity extends BaseEntity {
   @JoinTable({
     name: 'server_tag',
     joinColumn: {
-      name: 'tag_id',
+      name: 'server_id',
       referencedColumnName: 'id',
     },
     inverseJoinColumn: {
-      name: 'server_id',
+      name: 'tag_id',
       referencedColumnName: 'id',
     },
   })

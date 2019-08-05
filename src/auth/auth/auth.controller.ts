@@ -5,7 +5,7 @@ import {AuthGuard} from '@nestjs/passport';
 import { Request } from 'express';
 import {UserService} from '../user/user.service';
 import {RegistryUserDto} from '../dto/registry-user.dto';
-import {ApiUseTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiUseTags} from '@nestjs/swagger';
 
 @ApiUseTags('auth')
 @Controller('api/auth')
@@ -32,6 +32,7 @@ export class AuthController {
 
   @Get('user')
   @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   async user(@Req() request: Request): Promise<any> {
     return request.user;
   }

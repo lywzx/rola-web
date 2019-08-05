@@ -1,4 +1,4 @@
-import {env} from '../src/util/config';
+import {config, env} from '../src/util/config';
 import {TypeOrmModuleOptions} from '@nestjs/typeorm';
 
 export default {
@@ -57,8 +57,8 @@ export default {
       multipleStatements: false,
       engine: 'InnoDB',
       timezone: 'local',
-      debug: env('DB_DEBUG', false),
-      trace: env('DB_LOGGING', false),
+      debug: env('DB_DEBUG', config('app.app_debug')),
+      trace: env('DB_LOGGING', config('app.app_debug')),
       supportBigNumbers: true,
       entities: [
         'src/**/*.entity{.js,.ts}',

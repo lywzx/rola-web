@@ -48,11 +48,11 @@ export class UserEntity extends BaseEntity {
   @JoinTable({
     name: 'role_user',
     joinColumn: {
-      name: 'role_id',
+      name: 'user_id',
       referencedColumnName: 'id',
     },
     inverseJoinColumn: {
-      name: 'user_id',
+      name: 'role_id',
       referencedColumnName: 'id',
     },
   })

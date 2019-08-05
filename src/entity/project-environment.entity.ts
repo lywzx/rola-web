@@ -60,11 +60,11 @@ export class ProjectEnvironmentEntity extends BaseEntity {
   @JoinTable({
     name: 'project_environment_deploy',
     joinColumn: {
-      name: 'project_deploy_id',
+      name: 'project_environment_id',
       referencedColumnName: 'id',
     },
     inverseJoinColumn: {
-      name: 'project_environment_id',
+      name: 'project_deploy_id',
       referencedColumnName: 'id',
     },
   })

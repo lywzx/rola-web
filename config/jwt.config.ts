@@ -1,4 +1,3 @@
-import { IJwtConfig } from '../src/interfaces/jwt-config.interface';
 import { env } from '../src/util/config';
 import {JwtModuleOptions} from '@nestjs/jwt';
 

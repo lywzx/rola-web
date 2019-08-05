@@ -54,11 +54,11 @@ export class ProjectSettingFilesEntity extends BaseEntity {
   @JoinTable({
     name: 'project_environment_setting_file',
     joinColumn: {
-      name: 'project_environment_id',
+      name: 'project_setting_file_id',
       referencedColumnName: 'id',
     },
     inverseJoinColumn: {
-      name: 'project_setting_file_id',
+      name: 'project_environment_id',
       referencedColumnName: 'id',
     },
   })

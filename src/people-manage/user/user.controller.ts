@@ -13,6 +13,14 @@ import {AuthGuard} from '@nestjs/passport';
   },
   query: {
     exclude: ['password'],
+    join: {
+      roles: {
+        eager: true,
+      },
+      permissions: {
+        eager: true,
+      },
+    },
   },
 })
 @UseGuards(AuthGuard())

@@ -9,9 +9,7 @@ import { ProjectModule } from './project/project.module';
 import { PeopleManageModule } from './people-manage/people-manage.module';
 import {UserService} from './auth/user/user.service';
 import { ServerModule } from './server/server.module';
-import { ConfigModule } from './config/config.module';
 import {config} from './util/config';
-
 
 @Module({
   imports: [
@@ -22,7 +20,6 @@ import {config} from './util/config';
     ProjectModule,
     PeopleManageModule,
     ServerModule,
-    ConfigModule,
   ],
   controllers: [AppController],
   providers: [AppService, UserService],
