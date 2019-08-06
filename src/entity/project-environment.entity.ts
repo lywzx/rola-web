@@ -46,7 +46,7 @@ export class ProjectEnvironmentEntity extends BaseEntity {
   })
   lock: YesOrNo;
 
-  @ManyToOne(type => ProjectsEntity)
+  @ManyToOne(type => ProjectsEntity, project => project.environments)
   @JoinColumn({
     name: 'project_id',
     referencedColumnName: 'id',

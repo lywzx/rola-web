@@ -1,6 +1,7 @@
 import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {UserEntity} from './user.entity';
 import {BaseEntity} from './base.entity';
+import {ProjectsEntity} from './projects.entity';
 
 @Entity({
   name: 'space',
@@ -51,4 +52,7 @@ export class SpacesEntity extends BaseEntity {
     referencedColumnName: 'id',
   })
   owner: UserEntity;
+
+
+  projects: ProjectsEntity[];
 }

@@ -3,6 +3,7 @@ import { createHmac } from 'crypto';
 import {RolesEntity} from './roles.entity';
 import {BaseEntity} from './base.entity';
 import {Exclude} from 'class-transformer';
+import {ProjectsEntity} from './projects.entity';
 
 @Entity({
   name: 'user',
@@ -48,4 +49,5 @@ export class UserEntity extends BaseEntity {
   })
   roles: RolesEntity[];
 
+  projects: ProjectsEntity[];
 }

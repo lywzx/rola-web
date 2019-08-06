@@ -79,7 +79,7 @@ export class ProjectsEntity extends BaseEntity {
   })
   'require_review': YesOrNo;
 
-  @ManyToOne(type => SpacesEntity, {
+  @ManyToOne(type => SpacesEntity, space => space.projects, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
@@ -89,7 +89,7 @@ export class ProjectsEntity extends BaseEntity {
   })
   space: SpacesEntity;
 
-  @ManyToOne( type => UserEntity, {
+  @ManyToOne( type => UserEntity, user => user.projects, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
@@ -99,7 +99,7 @@ export class ProjectsEntity extends BaseEntity {
   })
   creator: UserEntity;
 
-  @OneToMany(type => ProjectEnvironmentEntity, projectEnvironment => projectEnvironment.display_name)
+  @OneToMany(type => ProjectEnvironmentEntity, projectEnvironment => projectEnvironment.project)
   /*@JoinTable({
     name: 'project_environment',
     joinColumn: {
@@ -127,7 +127,7 @@ export class ProjectsEntity extends BaseEntity {
   })*/
   servers: ServersEntity[];
 
-  @OneToOne(type => ProjectRepositoryEntity, {
+  @OneToOne(type => ProjectRepositoryEntity, projectRepository => projectRepository.project, {
     nullable: true,
   })
   repository: ProjectRepositoryEntity;
