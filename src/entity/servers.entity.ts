@@ -4,7 +4,8 @@ import {SpacesEntity} from './spaces.entity';
 import {UserEntity} from './user.entity';
 import {YesOrNo} from './options';
 import {
-  IsIn, IsInt, IsIP, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, Min,
+  IsArray,
+  IsIn, IsInt, IsIP, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, Min, ValidateNested,
   ValidationOptions,
 } from 'class-validator';
 import { CrudValidationGroups } from '@nestjsx/crud';
@@ -15,6 +16,8 @@ import {
   isString,
   isNumber,
 } from 'lodash';
+import {Type} from 'class-transformer';
+import {TagIdOnlyDto} from '../dto/tag-id-only.dto';
 
 const {CREATE, UPDATE} = CrudValidationGroups;
 @Entity({
@@ -147,6 +150,10 @@ export class ServersEntity extends BaseEntity {
   })
   creator: UserEntity;
 
+  @Type(type => TagIdOnlyDto)
+  @IsOptional({always: true})
+  @IsArray()
+  @ValidateNested({always: true, each: true})
   @ManyToMany(type => TagsEntity)
   @JoinTable({
     name: 'server_tag',

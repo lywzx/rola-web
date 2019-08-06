@@ -1,10 +1,12 @@
-import { Controller } from '@nestjs/common';
+import {Controller, UseGuards} from '@nestjs/common';
 import {Crud, CrudController} from '@nestjsx/crud';
 import {EnvironmentsEntity} from '../../entity/environments.entity';
 import {EnvironmentService} from './environment.service';
 import {ApiUseTags} from '@nestjs/swagger';
+import {AuthGuard} from '@nestjs/passport';
 
 @ApiUseTags('environment')
+@UseGuards(AuthGuard())
 @Crud({
   model: {
     type: EnvironmentsEntity,

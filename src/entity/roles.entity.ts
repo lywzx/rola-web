@@ -2,9 +2,13 @@ import {Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from 'typ
 import {UserEntity} from './user.entity';
 import {PermissionsEntity} from './permissions.entity';
 import {BaseEntity} from './base.entity';
-import { IsNotEmpty, IsOptional, IsString, Matches, MaxLength, ValidationOptions, IsByteLength} from 'class-validator';
+import {IsNotEmpty, IsOptional, IsString, Matches, MaxLength, ValidationOptions, IsByteLength, ValidateNested, IsArray} from 'class-validator';
 import { CrudValidationGroups } from '@nestjsx/crud';
 import { UniqueEntity } from '../validator/UniqueEntityConstraint';
+import {Type} from 'class-transformer';
+import {PermissionIdOnlyDto} from '../dto/permission-id-only.dto';
+import {ApiModelProperty, ApiModelPropertyOptional} from '@nestjs/swagger';
+import {UserIdOnlyDto} from '../dto/user-id-only.dto';
 
 const { CREATE, UPDATE } = CrudValidationGroups;
 const validateWithCreateAndUpdateGroup = {
@@ -37,6 +41,7 @@ export class RolesEntity extends BaseEntity {
     groups: [CREATE],
   })
   @Matches(/^[a-zA-Z][a-zA-Z0-9_]{2,59}$/, validateWithCreateAndUpdateGroup)
+  @ApiModelProperty()
   @Column({
     unique: true,
     length: 60,
@@ -51,6 +56,7 @@ export class RolesEntity extends BaseEntity {
     always: true,
   })
   @MaxLength(100, validateWithCreateAndUpdateGroup)
+  @ApiModelProperty()
   @Column({
     length: 100,
     comment: 'role display name',
@@ -66,6 +72,7 @@ export class RolesEntity extends BaseEntity {
     always: true,
   })
   @MaxLength(300, validateWithCreateAndUpdateGroup)
+  @ApiModelProperty()
   @Column({
     length: 300,
     comment: 'role description',
@@ -74,6 +81,11 @@ export class RolesEntity extends BaseEntity {
   })
   description: string;
 
+  @Type(type => UserIdOnlyDto)
+  @IsOptional({always: true})
+  @IsArray({always: true})
+  @ValidateNested({always: true, each: true})
+  @ApiModelPropertyOptional()
   @ManyToMany(type => UserEntity, user => user.roles, {
     cascade: true,
     onUpdate: 'CASCADE',
@@ -92,6 +104,18 @@ export class RolesEntity extends BaseEntity {
   })
   users: UserEntity[];
 
+  @Type(type => PermissionIdOnlyDto)
+  @IsOptional({
+    always: true,
+  })
+  @IsArray({
+    always: true,
+  })
+  @ValidateNested({
+    always: true,
+    each: true,
+  })
+  @ApiModelPropertyOptional()
   @ManyToMany( type => PermissionsEntity, permission => permission.roles, {
     cascade: true,
     onUpdate: 'CASCADE',

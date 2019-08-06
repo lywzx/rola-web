@@ -2,9 +2,12 @@ import {Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from 'typ
 import {RolesEntity} from './roles.entity';
 import {UserEntity} from './user.entity';
 import {BaseEntity} from './base.entity';
-import {IsNotEmpty, IsOptional, IsString, Matches, MaxLength, ValidationOptions} from 'class-validator';
+import {IsArray, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, ValidateNested, ValidationOptions} from 'class-validator';
 import { CrudValidationGroups } from '@nestjsx/crud';
 import {UniqueEntity} from '../validator/UniqueEntityConstraint';
+import {Type} from 'class-transformer';
+import {RoleIdOnlyDto} from '../dto/role-id-only.dto';
+import {UserIdOnlyDto} from '../dto/user-id-only.dto';
 
 const {CREATE, UPDATE} = CrudValidationGroups;
 const validateWithCreateAndUpdateGroup = {
@@ -56,9 +59,31 @@ export class PermissionsEntity extends BaseEntity {
   })
   description: string;
 
+  @Type(type => RoleIdOnlyDto)
+  @IsOptional({
+    always: true,
+  })
+  @IsArray({
+    always: true,
+  })
+  @ValidateNested({
+    always: true,
+    each: true,
+  })
   @ManyToMany(type => RolesEntity, role => role.permissions)
   roles: RolesEntity[];
 
+  @Type(type => UserIdOnlyDto)
+  @IsOptional({
+    always: true,
+  })
+  @IsArray({
+    always: true,
+  })
+  @ValidateNested({
+    always: true,
+    each: true,
+  })
   @ManyToMany(type => UserEntity)
   @JoinTable({
     name: 'permission_user',

@@ -15,10 +15,10 @@ import {AuthGuard} from '@nestjs/passport';
     exclude: ['password'],
     join: {
       roles: {
-        eager: true,
+        eager: false,
       },
       permissions: {
-        eager: true,
+        eager: false,
       },
     },
   },

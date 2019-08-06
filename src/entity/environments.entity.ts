@@ -2,6 +2,7 @@ import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique} f
 import {SpacesEntity} from './spaces.entity';
 import {BaseEntity} from './base.entity';
 import {
+  IsDefined, IsInstance,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -14,6 +15,7 @@ import { CrudValidationGroups } from '@nestjsx/crud';
 import {Type} from 'class-transformer';
 import {SpaceIdOnlyDto} from '../dto/space-id-only.dto';
 import {ApiModelProperty} from '@nestjs/swagger';
+import {UniqueEntity} from '../validator/UniqueEntityConstraint';
 
 const { CREATE, UPDATE } = CrudValidationGroups;
 
@@ -37,6 +39,12 @@ export class EnvironmentsEntity extends BaseEntity {
   @IsString({ always: true})
   @MaxLength(60, {always: true})
   @Matches(/^[a-zA-Z][a-zA-Z0-9_]{2,59}$/, {always: true})
+  // TODO 验证需要判断空间ID
+  @UniqueEntity({
+    table: 'environment',
+  }, {
+    always: true,
+  })
   @ApiModelProperty()
   @Column({
     length: 60,
@@ -55,9 +63,13 @@ export class EnvironmentsEntity extends BaseEntity {
   })
   'display_name': string;
 
+  @IsDefined({groups: [CREATE]} as ValidationOptions)
   @IsOptional({groups: [UPDATE]} as ValidationOptions)
+  @IsInstance(Object, {
+    always: true,
+  })
+  @ValidateNested({always: true})
   @Type(type => SpaceIdOnlyDto)
-  @ValidateNested({groups: [UPDATE]}  as ValidationOptions)
   @ApiModelProperty()
   @ManyToOne(type => SpacesEntity, {
     onDelete: 'CASCADE',

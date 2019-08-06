@@ -71,9 +71,10 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 - Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## 使用的第三方库
-[@nestjsx/crud](https://github.com/nestjsx/crud/wiki/Controllers#description)
-[@nestjsx/crud-request](https://github.com/nestjsx/crud/wiki/Requests#frontend-usage)
-[@nestjsx/crud-typeorm](https://github.com/nestjsx/crud/wiki/ServiceTypeorm)
+- [@nestjsx/crud](https://github.com/nestjsx/crud/wiki/Controllers#description)
+- [@nestjsx/crud-request](https://github.com/nestjsx/crud/wiki/Requests#frontend-usage)
+- [@nestjsx/crud-typeorm](https://github.com/nestjsx/crud/wiki/ServiceTypeorm)
+- [casbin](https://github.com/casbin/node-casbin)
 
 ## License
 

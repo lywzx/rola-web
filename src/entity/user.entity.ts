@@ -2,18 +2,7 @@ import {BeforeInsert, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedCol
 import { createHmac } from 'crypto';
 import {RolesEntity} from './roles.entity';
 import {BaseEntity} from './base.entity';
-import {
-  IsEmail,
-  IsEmpty,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  IsUrl,
-  Matches,
-  MaxLength,
-  MinLength,
-} from 'class-validator';
-import {UniqueEntity} from '../validator/UniqueEntityConstraint';
+import {Exclude} from 'class-transformer';
 
 @Entity({
   name: 'user',
@@ -36,6 +25,7 @@ export class UserEntity extends BaseEntity {
   @Column({unique: true, nullable: true, length: 191, comment: '用户邮箱，可以处理登录'})
   email: string;
 
+  @Exclude({toPlainOnly: true})
   @Column({comment: '登录密码'})
   password: string;
 
@@ -57,4 +47,5 @@ export class UserEntity extends BaseEntity {
     },
   })
   roles: RolesEntity[];
+
 }

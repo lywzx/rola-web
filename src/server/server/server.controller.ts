@@ -14,6 +14,18 @@ import {UserEntity} from '../../entity/user.entity';
   },
   query: {
     exclude: ['password', 'user_id'],
+    join: {
+      creator: {
+        exclude: ['password', 'created_at', 'updated_at'],
+        eager: false,
+      },
+      tags: {
+        eager: true,
+      },
+      spaces: {
+        eager: true,
+      },
+    },
   },
 })
 @Controller('api/server')
