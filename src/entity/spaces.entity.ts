@@ -1,7 +1,8 @@
-import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {UserEntity} from './user.entity';
 import {BaseEntity} from './base.entity';
 import {ProjectsEntity} from './projects.entity';
+import {EnvironmentsEntity} from './environments.entity';
 
 @Entity({
   name: 'space',
@@ -53,6 +54,8 @@ export class SpacesEntity extends BaseEntity {
   })
   owner: UserEntity;
 
+  @OneToMany(type => EnvironmentsEntity, environment => environment.space)
+  environments: EnvironmentsEntity[];
 
   projects: ProjectsEntity[];
 }

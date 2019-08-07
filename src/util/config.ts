@@ -28,3 +28,11 @@ export function config<T>(key: string): T {
 
   return get(configMap, key) as T;
 }
+
+/**
+ * get table full name
+ * @param tableName
+ */
+export function getTableNameWithPrefix(tableName: string): string {
+  return config(`database.connections.${config('database.default')}.entityPrefix`) + tableName;
+}

@@ -13,6 +13,9 @@ import {SpaceDto} from '../dto/space.dto';
   model: {
     type: SpacesEntity,
   },
+  routes: {
+    exclude: ['createManyBase'],
+  },
   query: {
     exclude: ['owner_id', 'user_id'],
     limit: 20,
@@ -25,6 +28,9 @@ import {SpaceDto} from '../dto/space.dto';
     join: {
       owner: {
         exclude: ['password'],
+        eager: false,
+      },
+      environments: {
         eager: false,
       },
     },

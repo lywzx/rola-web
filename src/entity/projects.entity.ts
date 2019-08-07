@@ -127,9 +127,7 @@ export class ProjectsEntity extends BaseEntity {
   })*/
   servers: ServersEntity[];
 
-  @OneToOne(type => ProjectRepositoryEntity, projectRepository => projectRepository.project, {
-    nullable: true,
-  })
+  @OneToOne(type => ProjectRepositoryEntity, repository => repository.project)
   repository: ProjectRepositoryEntity;
 
   @OneToMany(type => ProjectDeployEntity, deploy => deploy.project)

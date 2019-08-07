@@ -22,7 +22,7 @@ const { CREATE, UPDATE } = CrudValidationGroups;
 @Entity({
   name: 'environment',
 })
-@Unique(['space_id', 'name'])
+// @Unique(['space_id', 'name'])
 export class EnvironmentsEntity extends BaseEntity {
   @PrimaryGeneratedColumn({
     unsigned: true,
@@ -71,9 +71,8 @@ export class EnvironmentsEntity extends BaseEntity {
   @ValidateNested({always: true})
   @Type(type => SpaceIdOnlyDto)
   @ApiModelProperty()
-  @ManyToOne(type => SpacesEntity, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
+  @ManyToOne(type => SpacesEntity, space => space.environments, {
+    cascade: true,
   })
   @JoinColumn({
     name: 'space_id',

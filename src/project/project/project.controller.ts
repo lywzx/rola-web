@@ -10,6 +10,9 @@ import {ProjectService} from './project.service';
   model: {
     type: ProjectsEntity,
   },
+  routes: {
+    exclude: ['createManyBase'],
+  },
 })
 @UseGuards(AuthGuard())
 @Controller('api/project')

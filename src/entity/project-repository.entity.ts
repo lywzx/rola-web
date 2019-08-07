@@ -20,6 +20,7 @@ export class ProjectRepositoryEntity extends BaseEntity {
   'user_id': number;
 
   @Column({
+    unique: true,
     unsigned: true,
   })
   'project_id': number;
@@ -53,7 +54,7 @@ export class ProjectRepositoryEntity extends BaseEntity {
     comment: 'default branch name',
     default: 'master',
   })
-  defaultBranch: string;
+  'default_branch': string;
 
   @Column({
     length: 400,
@@ -62,7 +63,9 @@ export class ProjectRepositoryEntity extends BaseEntity {
   })
   destination: string;
 
-  @OneToOne(type => ProjectsEntity)
+  @OneToOne(type => ProjectsEntity, project => project.repository, {
+    nullable: true,
+  })
   @JoinColumn({
     name: 'project_id',
     referencedColumnName: 'id',

@@ -11,6 +11,15 @@ import {AuthGuard} from '@nestjs/passport';
   model: {
     type: EnvironmentsEntity,
   },
+  routes: {
+    only: [
+      'getManyBase',
+      'createOneBase',
+      'updateOneBase',
+      'replaceOneBase',
+      'deleteOneBase',
+    ],
+  },
   query: {
     join: {
       space: {

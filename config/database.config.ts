@@ -49,17 +49,19 @@ export default {
       database: env('DB_DATABASE', 'forge'),
       entityPrefix: env('DB_PREFIX', ''),
       synchronize: env('DB_SYNCHRONIZE', false),
+      // not work when create table
       charset: 'utf8mb4',
       collation: 'utf8mb4_unicode_ci',
       retryAttempts: 3,
-      retryDelay: 2000,
+      retryDelay: 20000,
       keepConnectionAlive: true,
       multipleStatements: false,
       engine: 'InnoDB',
       timezone: 'local',
       debug: env('DB_DEBUG', config('app.app_debug')),
       trace: env('DB_LOGGING', config('app.app_debug')),
-      supportBigNumbers: true,
+      supportBigNumbers: false,
+      migrationsRun: false,
       entities: [
         'src/**/*.entity{.js,.ts}',
       ],
@@ -72,8 +74,10 @@ export default {
       cli: {
         entitiesDir: 'src/entity',
         subscribersDir: 'src/subscriber',
-        migrationsDir: 'database/migration',
+        migrationsDir: 'database/migrations',
       },
+      migrationsTableName: env('DB_PREFIX', '') + 'migrations',
+      migrations: ['database/migrations/*.ts'],
     } as TypeOrmModuleOptions,
   },
 
