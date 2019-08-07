@@ -64,10 +64,13 @@ export class UserCreateTable1565168967535 implements MigrationInterface {
         {
           name: 'created_at',
           type: 'timestamp',
+          default: 'CURRENT_TIMESTAMP',
         },
         {
           name: 'updated_at',
           type: 'timestamp',
+          default: 'CURRENT_TIMESTAMP',
+          onUpdate: 'CURRENT_TIMESTAMP',
         },
       ],
     }), true);

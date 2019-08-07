@@ -76,10 +76,13 @@ export class ProjectRepositoryCreateTable1565174883488 implements MigrationInter
         {
           name: 'created_at',
           type: 'timestamp',
+          default: 'CURRENT_TIMESTAMP',
         },
         {
           name: 'updated_at',
           type: 'timestamp',
+          default: 'CURRENT_TIMESTAMP',
+          onUpdate: 'CURRENT_TIMESTAMP',
         },
       ],
       foreignKeys: [

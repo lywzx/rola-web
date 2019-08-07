@@ -51,6 +51,17 @@ export class SettingCreateTable1565174342884 implements MigrationInterface {
           default: SettingValueTypeOptions.string,
           comment: 'setting value type',
         },
+        {
+          name: 'created_at',
+          type: 'timestamp',
+          default: 'CURRENT_TIMESTAMP',
+        },
+        {
+          name: 'updated_at',
+          type: 'timestamp',
+          default: 'CURRENT_TIMESTAMP',
+          onUpdate: 'CURRENT_TIMESTAMP',
+        },
       ],
       foreignKeys: [
         {

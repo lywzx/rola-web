@@ -41,10 +41,13 @@ export class TagCreateTable1565174313530 implements MigrationInterface {
         {
           name: 'created_at',
           type: 'timestamp',
+          default: 'CURRENT_TIMESTAMP',
         },
         {
           name: 'updated_at',
           type: 'timestamp',
+          default: 'CURRENT_TIMESTAMP',
+          onUpdate: 'CURRENT_TIMESTAMP',
         },
       ],
     }), true);

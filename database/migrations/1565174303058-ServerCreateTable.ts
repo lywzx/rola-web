@@ -76,10 +76,13 @@ export class ServerCreateTable1565174303058 implements MigrationInterface {
         {
           name: 'created_at',
           type: 'timestamp',
+          default: 'CURRENT_TIMESTAMP',
         },
         {
           name: 'updated_at',
           type: 'timestamp',
+          default: 'CURRENT_TIMESTAMP',
+          onUpdate: 'CURRENT_TIMESTAMP',
         },
       ],
       foreignKeys: [
