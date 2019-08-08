@@ -10,6 +10,7 @@ import { PeopleManageModule } from './people-manage/people-manage.module';
 import {UserService} from './auth/user/user.service';
 import { ServerModule } from './server/server.module';
 import {config} from './util/config';
+import { ShareModule } from './share/share.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import {config} from './util/config';
     ProjectModule,
     PeopleManageModule,
     ServerModule,
+    ShareModule,
   ],
   controllers: [AppController],
   providers: [AppService, UserService],

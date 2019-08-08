@@ -2,10 +2,14 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
 import {config} from './util/config';
+import {join} from 'path';
+import {NestExpressApplication} from '@nestjs/platform-express';
 declare const module: any;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.useStaticAssets(join(__dirname, '../public'));
 
   const options = new DocumentBuilder()
     .setTitle(config('app.app_name'))
