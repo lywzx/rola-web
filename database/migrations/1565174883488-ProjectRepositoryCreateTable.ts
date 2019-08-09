@@ -1,5 +1,5 @@
 import {MigrationInterface, QueryRunner, Table} from 'typeorm';
-import {getTableNameWithPrefix} from '../../src/util/config';
+import {getTableNameWithPrefix} from '../../src/util/helper';
 import {ProjectRepositoryOnlineLogo, ProjectRepositoryType} from '../../src/entity/options';
 
 export class ProjectRepositoryCreateTable1565174883488 implements MigrationInterface {

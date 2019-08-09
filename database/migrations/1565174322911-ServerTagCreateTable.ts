@@ -1,5 +1,5 @@
 import {MigrationInterface, QueryRunner, Table} from 'typeorm';
-import {getTableNameWithPrefix} from '../../src/util/config';
+import {getTableNameWithPrefix} from '../../src/util/helper';
 
 export class ServerTagCreateTable1565174322911 implements MigrationInterface {
   protected tableName = getTableNameWithPrefix('server_tag');

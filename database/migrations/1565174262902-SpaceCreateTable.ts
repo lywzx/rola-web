@@ -1,5 +1,5 @@
 import {MigrationInterface, QueryRunner, Table} from 'typeorm';
-import {getTableNameWithPrefix} from '../../src/util/config';
+import {getTableNameWithPrefix} from '../../src/util/helper';
 
 export class SpaceCreateTable1565174262902 implements MigrationInterface {
 

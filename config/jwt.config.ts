@@ -1,4 +1,4 @@
-import { env } from '../src/util/config';
+import { env } from '../src/util/helper';
 import {JwtModuleOptions} from '@nestjs/jwt';
 
 export default {

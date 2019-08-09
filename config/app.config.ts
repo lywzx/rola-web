@@ -1,4 +1,4 @@
-import {env} from '../src/util/config';
+import {env} from '../src/util/helper';
 
 export default {
   app_name: env('APP_NAME', 'rola-web'),

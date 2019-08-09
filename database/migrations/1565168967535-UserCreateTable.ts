@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner, Table} from 'typeorm';
 import {YesOrNo} from '../../src/entity/options';
-import {getTableNameWithPrefix} from '../../src/util/config';
+import {getTableNameWithPrefix} from '../../src/util/helper';
 
 export class UserCreateTable1565168967535 implements MigrationInterface {
 

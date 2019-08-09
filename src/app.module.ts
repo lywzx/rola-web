@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './modules/auth/auth.module';
 import {TypeOrmModule} from '@nestjs/typeorm';
-import { SpaceModule } from './space/space.module';
-import { EnvironmentModule } from './environment/environment.module';
-import { ProjectModule } from './project/project.module';
-import { PeopleManageModule } from './people-manage/people-manage.module';
-import {UserService} from './auth/user/user.service';
-import { ServerModule } from './server/server.module';
-import {config} from './util/config';
-import { ShareModule } from './share/share.module';
+import { SpaceModule } from './modules/space/space.module';
+import { EnvironmentModule } from './modules/environment/environment.module';
+import { ProjectModule } from './modules/project/project.module';
+import { PeopleManageModule } from './modules/people-manage/people-manage.module';
+import {UserService} from './modules/auth/user/user.service';
+import { ServerModule } from './modules/server/server.module';
+import {config} from './util/helper';
+import { ShareModule } from './modules/share/share.module';
 
 @Module({
   imports: [

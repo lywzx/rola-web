@@ -1,5 +1,5 @@
 import {MigrationInterface, QueryRunner, Table} from 'typeorm';
-import {getTableNameWithPrefix} from '../../src/util/config';
+import {getTableNameWithPrefix} from '../../src/util/helper';
 
 export class RoleCreateTable1565172064595 implements MigrationInterface {
 

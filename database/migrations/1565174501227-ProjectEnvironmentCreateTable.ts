@@ -1,5 +1,5 @@
 import {MigrationInterface, QueryRunner, Table} from 'typeorm';
-import {getTableNameWithPrefix} from '../../src/util/config';
+import {getTableNameWithPrefix} from '../../src/util/helper';
 import {YesOrNo} from '../../src/entity/options';
 
 export class ProjectEnvironmentCreateTable1565174501227 implements MigrationInterface {

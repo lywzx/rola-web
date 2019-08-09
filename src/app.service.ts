@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {CrudConfigService, CrudGlobalConfig} from '@nestjsx/crud';
-import {config} from './util/config';
+import {config} from './util/helper';
 
 @Injectable()
 export class AppService {

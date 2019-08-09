@@ -1,5 +1,5 @@
 import {MigrationInterface, QueryRunner, Table} from 'typeorm';
-import {getTableNameWithPrefix} from '../../src/util/config';
+import {getTableNameWithPrefix} from '../../src/util/helper';
 
 export class FileCreateTable1565344144152 implements MigrationInterface {
 
@@ -68,7 +68,7 @@ export class FileCreateTable1565344144152 implements MigrationInterface {
           onUpdate: 'CURRENT_TIMESTAMP',
         },
         {
-          name: 'updated_at',
+          name: 'deleted_at',
           type: 'timestamp',
           isNullable: true,
         },

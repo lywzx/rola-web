@@ -1,15 +1,23 @@
-import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {AfterLoad, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, ViewColumn} from 'typeorm';
 import {BaseEntity} from './base.entity';
 import {UserEntity} from './user.entity';
+import {url} from '../util/helper';
+import {Exclude, Expose} from 'class-transformer';
 
 @Entity('file')
 export class FilesEntity extends BaseEntity {
+
+  @Expose()
+  get file_url(): string {
+    return url(this.path || '');
+  }
 
   @PrimaryGeneratedColumn({
     unsigned: true,
   })
   id: number;
 
+  @Exclude()
   @Column({
     unsigned: true,
     nullable: true,

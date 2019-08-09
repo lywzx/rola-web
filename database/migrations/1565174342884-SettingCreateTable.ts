@@ -1,5 +1,5 @@
 import {MigrationInterface, QueryRunner, Table} from 'typeorm';
-import {getTableNameWithPrefix} from '../../src/util/config';
+import {getTableNameWithPrefix} from '../../src/util/helper';
 import {SettingValueTypeOptions} from '../../src/entity/options';
 
 export class SettingCreateTable1565174342884 implements MigrationInterface {

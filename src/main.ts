@@ -1,15 +1,18 @@
-import { NestFactory } from '@nestjs/core';
+import {NestFactory, Reflector} from '@nestjs/core';
 import { AppModule } from './app.module';
 import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
-import {config} from './util/config';
+import {config} from './util/helper';
 import {join} from 'path';
 import {NestExpressApplication} from '@nestjs/platform-express';
+import {ClassSerializerInterceptor} from '@nestjs/common';
 declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.useStaticAssets(join(__dirname, '../public'));
+
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   const options = new DocumentBuilder()
     .setTitle(config('app.app_name'))

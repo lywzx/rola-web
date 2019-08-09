@@ -1,4 +1,4 @@
-import {config, env} from '../src/util/config';
+import {config, env} from '../src/util/helper';
 import {TypeOrmModuleOptions} from '@nestjs/typeorm';
 
 export default {

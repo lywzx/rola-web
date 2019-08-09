@@ -1,5 +1,5 @@
 import {MigrationInterface, QueryRunner, Table} from 'typeorm';
-import {getTableNameWithPrefix} from '../../src/util/config';
+import {getTableNameWithPrefix} from '../../src/util/helper';
 import {ProjectDeployOptions, ProjectDeployShellTypeOptions} from '../../src/entity/options';
 
 export class ProjectDeployCreateTable1565174679606 implements MigrationInterface {
