@@ -43,5 +43,5 @@ export function getTableNameWithPrefix(tableName: string): string {
  * @param path
  */
 export function url(path): string {
-  return join(config('app.app_url'), path);
+  return (config('app.app_url') as string).replace(/\/$/, '') + '/' + path.replace(/^\//, '');
 }

@@ -60,7 +60,7 @@ export class UniqueEntityConstraint implements ValidatorConstraintInterface {
     }
     const [sql, params] = query.getQueryAndParameters();
     return manage.query(`SELECT EXISTS(${sql}) as 'exists'`, params).then(([{ exists }]) => {
-      return exists === '0';
+      return parseInt(exists, 10) === 0;
     });
   }
 }

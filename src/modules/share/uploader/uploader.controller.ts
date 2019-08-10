@@ -30,7 +30,7 @@ export class UploaderController {
       entity.ext = extname(it.filename).replace(/^\./, '');
       entity.mime_type = it.mimetype;
       entity.size = it.size;
-      entity.path = it.path;
+      entity.path = it.path.replace(/\\/g, '/');
       return entity;
     }));
     return savedFiles;

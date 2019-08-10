@@ -32,6 +32,9 @@ export class UserEntity extends BaseEntity {
   @Column({unique: true, nullable: true, length: 191, comment: '用户邮箱，可以处理登录'})
   email: string;
 
+  @Exclude({
+    toPlainOnly: true,
+  })
   @Column({comment: '登录密码'})
   password: string;
 
