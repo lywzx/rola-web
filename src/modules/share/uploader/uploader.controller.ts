@@ -6,7 +6,9 @@ import {UploaderService} from './uploader.service';
 import {FilesEntity} from '../../../entity/files.entity';
 import {UserEntity} from '../../../entity/user.entity';
 import {extname} from 'path';
+import {ApiBearerAuth, ApiConsumes, ApiImplicitFile, ApiUseTags} from '@nestjs/swagger';
 
+@ApiUseTags('share/uploader')
 @UseGuards(AuthGuard())
 @Controller('api/upload')
 export class UploaderController {
@@ -14,6 +16,9 @@ export class UploaderController {
   public constructor(private readonly uploaderService: UploaderService) {
   }
 
+  @ApiBearerAuth()
+  @ApiConsumes('multipart/form-data')
+  @ApiImplicitFile({ name: 'files', required: true, description: 'List of cats' })
   @Post('common')
   @UseInterceptors(FilesInterceptor('files'))
   public async uploadFile(@UploadedFiles() files, @Req() request: Request) {
@@ -22,7 +27,7 @@ export class UploaderController {
       const entity = new FilesEntity();
       entity.user_id = user.id;
       entity.name = it.filename;
-      entity.ext = extname(it.filename);
+      entity.ext = extname(it.filename).replace(/^\./, '');
       entity.mime_type = it.mimetype;
       entity.size = it.size;
       entity.path = it.path;

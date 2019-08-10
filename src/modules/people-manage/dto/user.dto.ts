@@ -29,7 +29,7 @@ export class UserDto {
 
   @IsOptional({always: true})
   @IsNotEmpty({always: true})
-  @IsUrl({protocols: ['http', 'https']}, {always: true})
+  @IsUrl({protocols: ['http', 'https']}, groupsCreateAndUpdate)
   @MaxLength(400, {always: true})
   @ApiModelProperty()
   avatar: string;

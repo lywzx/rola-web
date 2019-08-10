@@ -9,7 +9,7 @@ import {AuthGuard} from '@nestjs/passport';
 @ApiUseTags('people-manage/user')
 @Crud({
   model: {
-    type: UserEntity,
+    type: UserDto,
   },
   query: {
     exclude: ['password'],
@@ -25,6 +25,6 @@ import {AuthGuard} from '@nestjs/passport';
 })
 @UseGuards(AuthGuard())
 @Controller('api/user')
-export class UserController implements CrudController<UserDto> {
+export class UserController implements CrudController<UserEntity> {
   public constructor(public service: UserService) {}
 }
