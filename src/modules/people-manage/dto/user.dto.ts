@@ -32,7 +32,7 @@ export class UserDto {
 
   @IsOptional({always: true})
   @IsNotEmpty({always: true})
-  @IsUrl({protocols: ['http', 'https']}, groupsCreateAndUpdate)
+  @IsUrl({protocols: ['http', 'https']}, {always: true})
   @MaxLength(400, {always: true})
   @ApiModelProperty()
   avatar: string;
@@ -45,7 +45,13 @@ export class UserDto {
   @UniqueEntity({
     table: 'user',
   }, {
-    always: true,
+    groups: [CREATE],
+  })
+  @UniqueEntity({
+    table: 'user',
+    ignoreDepColumn: {id: 'id'},
+  }, {
+    groups: [UPDATE],
   })
   @ApiModelProperty()
   'user_name': string;
@@ -57,7 +63,15 @@ export class UserDto {
   @UniqueEntity({
     table: 'user',
   }, {
-    always: true,
+    groups: [CREATE],
+  })
+  @UniqueEntity({
+    table: 'user',
+    ignoreDepColumn: {
+      id: 'id',
+    },
+  }, {
+    groups: [UPDATE],
   })
   @ApiModelProperty()
   email?: string;

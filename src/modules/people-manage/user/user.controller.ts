@@ -1,5 +1,5 @@
 import {Controller, UseGuards} from '@nestjs/common';
-import {Crud, CrudController} from '@nestjsx/crud';
+import {Crud, CrudController, CrudRequest, Override, ParsedBody, ParsedRequest} from '@nestjsx/crud';
 import {UserService} from './user.service';
 import {UserEntity} from '../../../entity/user.entity';
 import {ApiUseTags} from '@nestjs/swagger';
@@ -27,4 +27,22 @@ import {AuthGuard} from '@nestjs/passport';
 @Controller('api/user')
 export class UserController implements CrudController<UserEntity> {
   public constructor(public service: UserService) {}
+
+  get base(): CrudController<UserEntity> {
+    return this;
+  }
+
+  @Override()
+  createOne(
+    @ParsedRequest() req: CrudRequest,
+    @ParsedBody() dto: UserEntity,
+  ) {
+    return this.base.createOneBase(req, dto);
+  }
+
+  @Override()
+  replaceOnBase(@ParsedRequest() req: CrudRequest,
+                @ParsedBody() dto: UserEntity) {
+    return this.base.replaceOnBase(req, dto);
+  }
 }
