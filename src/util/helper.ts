@@ -1,6 +1,5 @@
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
-import {join} from 'path';
 import { get } from 'lodash';
 
 let configCache = null;

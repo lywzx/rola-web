@@ -23,17 +23,16 @@ export class UploaderController {
   @UseInterceptors(FilesInterceptor('files'))
   public async uploadFile(@UploadedFiles() files, @Req() request: Request) {
     const user = request.user as UserEntity;
-    const savedFiles = await this.uploaderService.createMany(files.map(it => {
+    return await this.uploaderService.createMany(files.map(it => {
       const entity = new FilesEntity();
       entity.user_id = user.id;
       entity.name = it.filename;
       entity.ext = extname(it.filename).replace(/^\./, '');
       entity.mime_type = it.mimetype;
       entity.size = it.size;
-      entity.path = it.path.replace(/\\/g, '/');
+      entity.path = it.path.replace(/\\/g, '/').replace(/^\/?(?:public\/)?/, '');
       return entity;
     }));
-    return savedFiles;
   }
 
 }
