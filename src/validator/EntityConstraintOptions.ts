@@ -1,6 +1,6 @@
 import {SelectQueryBuilder, ObjectLiteral} from 'typeorm';
 
-export interface UniqueEntityConstraintOptions {
+export interface EntityConstraintOptions {
   table?: string;
   connection?: string;
   columnName?: string;

@@ -2,7 +2,7 @@ import {registerDecorator, ValidationArguments, ValidationOptions, ValidatorCons
 import {
   getManager, ObjectLiteral,
 } from 'typeorm';
-import {UniqueEntityConstraintOptions} from './UniqueEntityConstraintOptions';
+import {EntityConstraintOptions} from './EntityConstraintOptions';
 import {getWhereAndValue} from '../util/fn';
 
 @ValidatorConstraint({
@@ -16,7 +16,7 @@ export class UniqueEntityConstraint implements ValidatorConstraintInterface {
   }
 
   validate(value: any, validationArguments?: ValidationArguments): Promise<boolean> | boolean {
-    const options = validationArguments.constraints[0] as UniqueEntityConstraintOptions;
+    const options = validationArguments.constraints[0] as EntityConstraintOptions;
     const tableName = options.table ? options.table : validationArguments.targetName;
     const columnName = options.columnName ? options.columnName : validationArguments.property;
     const manage = getManager(options.connection);
@@ -65,7 +65,7 @@ export class UniqueEntityConstraint implements ValidatorConstraintInterface {
   }
 }
 
-export function UniqueEntity(options: UniqueEntityConstraintOptions, validationOptions?: ValidationOptions) {
+export function UniqueEntity(options: EntityConstraintOptions, validationOptions?: ValidationOptions) {
   return (object: {}, propertyName: string) => {
     registerDecorator({
       async: true,

@@ -1,5 +1,5 @@
 import {registerDecorator, ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface} from 'class-validator';
-import {UniqueEntityConstraintOptions} from './UniqueEntityConstraintOptions';
+import {EntityConstraintOptions} from './EntityConstraintOptions';
 import {getManager} from 'typeorm';
 import {getWhereAndValue} from '../util/fn';
 
@@ -13,7 +13,7 @@ export class ExistsEntityConstraint implements ValidatorConstraintInterface {
   }
 
   validate(value: any, validationArguments?: ValidationArguments): Promise<boolean> | boolean {
-    const options = validationArguments.constraints[0] as UniqueEntityConstraintOptions;
+    const options = validationArguments.constraints[0] as EntityConstraintOptions;
     const tableName = options.table ? options.table : validationArguments.targetName;
     const columnName = options.columnName || 'id';
     const manage = getManager(options.connection);
@@ -62,7 +62,7 @@ export class ExistsEntityConstraint implements ValidatorConstraintInterface {
   }
 }
 
-export function ExistsEntity(options: UniqueEntityConstraintOptions, validationOptions?: ValidationOptions) {
+export function ExistsEntity(options: EntityConstraintOptions, validationOptions?: ValidationOptions) {
   return (object: {}, propertyName: string) => {
     registerDecorator({
       async: true,
