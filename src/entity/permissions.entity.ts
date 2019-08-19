@@ -49,7 +49,6 @@ export class PermissionsEntity extends BaseEntity {
   'display_name': string;
 
   @IsOptional({always: true})
-  @IsNotEmpty(validateWithCreateAndUpdateGroup)
   @IsString(validateWithCreateAndUpdateGroup)
   @MaxLength(300, validateWithCreateAndUpdateGroup)
   @Column({

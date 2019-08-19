@@ -66,7 +66,6 @@ export class RolesEntity extends BaseEntity {
   'display_name': string;
 
   @IsOptional(validateWithCreateAndUpdateGroup)
-  @IsNotEmpty(validateWithCreateAndUpdateGroup)
   @IsString({
     ...validateWithCreateAndUpdateGroup,
     always: true,

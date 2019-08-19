@@ -9,7 +9,7 @@ import {AuthGuard} from '@nestjs/passport';
 @ApiUseTags('people-manage/user')
 @Crud({
   model: {
-    type: UserDto,
+    type: UserEntity,
   },
   query: {
     exclude: ['password'],
@@ -25,24 +25,24 @@ import {AuthGuard} from '@nestjs/passport';
 })
 @UseGuards(AuthGuard())
 @Controller('api/user')
-export class UserController implements CrudController<UserEntity> {
+export class UserController implements CrudController<UserDto> {
   public constructor(public service: UserService) {}
 
-  get base(): CrudController<UserEntity> {
+  get base(): CrudController<UserDto> {
     return this;
   }
 
   @Override()
   createOne(
     @ParsedRequest() req: CrudRequest,
-    @ParsedBody() dto: UserEntity,
+    @ParsedBody() dto: UserDto,
   ) {
     return this.base.createOneBase(req, dto);
   }
 
   @Override()
   replaceOnBase(@ParsedRequest() req: CrudRequest,
-                @ParsedBody() dto: UserEntity) {
+                @ParsedBody() dto: UserDto) {
     return this.base.replaceOnBase(req, dto);
   }
 }
