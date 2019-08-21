@@ -31,7 +31,17 @@ export class PermissionsEntity extends BaseEntity {
   @Matches(/^[a-zA-Z][a-zA-Z0-9_]{2,59}$/, validateWithCreateAndUpdateGroup)
   @UniqueEntity({
     table: 'permission',
-  }, validateWithCreateAndUpdateGroup)
+  }, {
+    groups: [CREATE],
+  })
+  @UniqueEntity({
+    table: 'permission',
+    ignoreDepColumn: {
+      id: 'id',
+    },
+  }, {
+    groups: [UPDATE],
+  })
   @Column({
     unique: true,
     length: 60,
@@ -81,7 +91,6 @@ export class PermissionsEntity extends BaseEntity {
   })
   @ValidateNested({
     always: true,
-    each: true,
   })
   @ManyToMany(type => UserEntity)
   @JoinTable({
