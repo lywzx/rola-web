@@ -7,31 +7,31 @@ export enum SettingValueTypeOptions {
 }
 
 export enum ProjectStatusOptions {
-  lock,
-  ok,
+  lock = 'lock',
+  ok = 'ok',
 }
 
 export enum YesOrNo {
-  no,
-  yes,
+  no = 'no',
+  yes = 'yes',
 }
 
 export enum ProjectRepositoryType {
-  git,
-  svn,
+  git = 'git',
+  svn = 'svn',
 }
 
 export enum ProjectRepositoryOnlineLogo {
-  tag,
-  branch,
+  tag = 'tag',
+  branch = 'branch',
 }
 
 export enum ProjectDeployOptions {
-  before,
-  after,
+  before = 'before',
+  after = 'after',
 }
 
 export enum ProjectDeployShellTypeOptions {
-  up,
-  down,
+  up = 'up',
+  down = 'down',
 }

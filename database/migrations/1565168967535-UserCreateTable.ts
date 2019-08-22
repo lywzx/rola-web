@@ -58,7 +58,7 @@ export class UserCreateTable1565168967535 implements MigrationInterface {
           name: 'lock',
           type: 'enum',
           enum: [YesOrNo.yes.toString(), YesOrNo.no.toString()],
-          default: YesOrNo.yes,
+          default: `'${YesOrNo.yes}'`,
           comment: 'user is locked',
         },
         {

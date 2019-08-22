@@ -152,8 +152,8 @@ export class ServersEntity extends BaseEntity {
 
   @Type(type => TagIdOnlyDto)
   @IsOptional({always: true})
-  @IsArray()
-  @ValidateNested({always: true, each: true})
+  @IsArray({always: true})
+  @ValidateNested({always: true})
   @ManyToMany(type => TagsEntity)
   @JoinTable({
     name: 'server_tag',

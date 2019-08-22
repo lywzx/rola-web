@@ -62,7 +62,7 @@ export class ProjectCreateTable1565174379028 implements MigrationInterface {
             YesOrNo.yes.toString(),
             YesOrNo.no.toString(),
           ],
-          default: YesOrNo.yes.toString(),
+          default: `'${YesOrNo.yes}'`,
           comment: 'Need to be reviewed before going online',
         },
         {

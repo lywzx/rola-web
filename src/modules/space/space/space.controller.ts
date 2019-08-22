@@ -19,12 +19,12 @@ import {SpaceDto} from '../dto/space.dto';
   query: {
     exclude: ['owner_id', 'user_id'],
     limit: 20,
-    sort: [
+    /*sort: [
       {
         field: 'updated_at',
         order: 'DESC',
       },
-    ],
+    ],*/
     join: {
       owner: {
         exclude: ['password'],

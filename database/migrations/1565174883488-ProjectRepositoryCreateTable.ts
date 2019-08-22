@@ -37,8 +37,8 @@ export class ProjectRepositoryCreateTable1565174883488 implements MigrationInter
             ProjectRepositoryType.git.toString(),
             ProjectRepositoryType.svn.toString(),
           ],
-          default: ProjectRepositoryType.git,
-          comment: 'project repository type, e.g: svn, git'
+          default: `'${ProjectRepositoryType.git}'`,
+          comment: 'project repository type, e.g: svn, git',
         },
         {
           name: 'url',
@@ -55,7 +55,7 @@ export class ProjectRepositoryCreateTable1565174883488 implements MigrationInter
             ProjectRepositoryOnlineLogo.branch.toString(),
             ProjectRepositoryOnlineLogo.tag.toString(),
           ],
-          default: ProjectRepositoryOnlineLogo.branch,
+          default: `'${ProjectRepositoryOnlineLogo.branch}'`,
           comment: 'online mode',
         },
         {

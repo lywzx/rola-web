@@ -70,7 +70,7 @@ export class ServerCreateTable1565174303058 implements MigrationInterface {
           name: 'lock',
           type: 'enum',
           enum: [YesOrNo.yes.toString(), YesOrNo.no.toString()],
-          default: YesOrNo.yes,
+          default: `'${YesOrNo.yes}'`,
           comment: 'server is locked',
         },
         {

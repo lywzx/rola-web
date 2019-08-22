@@ -1,20 +1,23 @@
 import {
   IsArray,
   IsEmail,
+  IsIn,
   IsNotEmpty,
   IsOptional,
   IsString,
   IsUrl,
   Matches,
   MaxLength,
-  MinLength, ValidateNested,
+  MinLength,
+  ValidateNested,
   ValidationOptions,
 } from 'class-validator';
 import {ApiModelProperty} from '@nestjs/swagger';
 import {UniqueEntity} from '../../../validator/UniqueEntityConstraint';
-import { CrudValidationGroups } from '@nestjsx/crud';
+import {CrudValidationGroups} from '@nestjsx/crud';
 import {Type} from 'class-transformer';
 import {RoleIdOnlyDto} from '../../../dto/role-id-only.dto';
+import {YesOrNo} from '../../../entity/options';
 
 const {CREATE, UPDATE} = CrudValidationGroups;
 const groupsCreateAndUpdate = {
@@ -82,6 +85,11 @@ export class UserDto {
   @MinLength(6, {always: true})
   @ApiModelProperty()
   password?: string;
+
+  @IsOptional({groups: [UPDATE]})
+  @IsIn([YesOrNo.yes, YesOrNo.no], {always: true})
+  @ApiModelProperty()
+  lock?: YesOrNo;
 
   @IsOptional({always: true})
   @IsArray({always: true})
