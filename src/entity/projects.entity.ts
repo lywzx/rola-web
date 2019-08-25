@@ -7,8 +7,20 @@ import {ServersEntity} from './servers.entity';
 import {ProjectRepositoryEntity} from './project-repository.entity';
 import {ProjectEnvironmentEntity} from './project-environment.entity';
 import {ProjectDeployEntity} from './project-deploy.entity';
-import {IsIn, IsInt, IsNotEmpty, IsOptional, IsString, MaxLength, Min, ValidationOptions} from 'class-validator';
+import {
+  IsIn,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+  ValidateNested,
+  ValidationOptions,
+} from 'class-validator';
 import { CrudValidationGroups } from '@nestjsx/crud';
+import {Exclude, Type} from 'class-transformer';
+import {ApiModelProperty} from '@nestjs/swagger';
+import {SpaceIdOnlyDto} from '../dto/space-id-only.dto';
+import {EnvironmentIdOnlyDto} from '../dto/environment-id-only.dto';
 
 const { CREATE, UPDATE } = CrudValidationGroups;
 
@@ -22,14 +34,17 @@ export class ProjectsEntity extends BaseEntity {
   })
   id: number;
 
-  @IsOptional({groups: [UPDATE]} as ValidationOptions)
-  @IsInt()
-  @Min(0)
+  @Exclude({
+    toClassOnly: true,
+  })
   @Column({
     unsigned: true,
   })
   'space_id': number;
 
+  /*@Exclude({
+    toClassOnly: true,
+  })*/
   @Column({
     name: 'user_id',
     unsigned: true,
@@ -38,9 +53,12 @@ export class ProjectsEntity extends BaseEntity {
   'user_id': number;
 
   @IsOptional({groups: [UPDATE]} as ValidationOptions)
-  @IsNotEmpty()
+  @IsNotEmpty({always: true})
   @IsString({ always: true})
-  @MaxLength(191)
+  @MaxLength(191, {
+    always: true,
+  })
+  @ApiModelProperty()
   @Column({
     type: 'varchar',
     length: 191,
@@ -48,9 +66,12 @@ export class ProjectsEntity extends BaseEntity {
   })
   name: string;
 
-  @IsOptional()
+  @IsOptional({always: true})
   @IsString({ always: true})
-  @MaxLength(300)
+  @MaxLength(300, {
+    always: true,
+  })
+  @ApiModelProperty()
   @Column({
     default: '',
     length: 300,
@@ -59,8 +80,13 @@ export class ProjectsEntity extends BaseEntity {
   })
   description: string;
 
-  @IsOptional()
-  @IsIn([ProjectStatusOptions.lock, ProjectStatusOptions.ok])
+  @IsOptional({
+    always: true,
+  })
+  @IsIn([ProjectStatusOptions.lock, ProjectStatusOptions.ok], {
+    always: true,
+  })
+  @ApiModelProperty()
   @Column({
     type: 'enum',
     enum: ProjectStatusOptions,
@@ -69,8 +95,8 @@ export class ProjectsEntity extends BaseEntity {
   })
   status: ProjectStatusOptions;
 
-  @IsOptional()
-  @IsIn([YesOrNo.yes, YesOrNo.no])
+  @IsOptional({always: true})
+  @IsIn([YesOrNo.yes, YesOrNo.no], {always: true})
   @Column({
     type: 'enum',
     enum: YesOrNo,
@@ -79,6 +105,10 @@ export class ProjectsEntity extends BaseEntity {
   })
   'require_review': YesOrNo;
 
+  @IsOptional({groups: [UPDATE]} as ValidationOptions)
+  @Type(() => SpaceIdOnlyDto)
+  @ValidateNested({always: true})
+  @ApiModelProperty()
   @ManyToOne(type => SpacesEntity, space => space.projects, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
@@ -89,6 +119,9 @@ export class ProjectsEntity extends BaseEntity {
   })
   space: SpacesEntity;
 
+  @Exclude({
+    toClassOnly: true,
+  })
   @ManyToOne( type => UserEntity, user => user.projects, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
@@ -99,6 +132,9 @@ export class ProjectsEntity extends BaseEntity {
   })
   creator: UserEntity;
 
+  @Type(type => EnvironmentIdOnlyDto)
+  @ValidateNested({always: true})
+  @ApiModelProperty()
   @OneToMany(type => ProjectEnvironmentEntity, projectEnvironment => projectEnvironment.project)
   /*@JoinTable({
     name: 'project_environment',

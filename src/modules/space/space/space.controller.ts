@@ -5,7 +5,6 @@ import {SpaceService} from './space.service';
 import {AuthGuard} from '@nestjs/passport';
 import {Request} from 'express';
 import {ApiBearerAuth, ApiUseTags} from '@nestjs/swagger';
-import {SpaceDto} from '../dto/space.dto';
 
 @ApiUseTags('space')
 @ApiBearerAuth()
@@ -38,16 +37,16 @@ import {SpaceDto} from '../dto/space.dto';
 })
 @Controller('api/space')
 @UseGuards(AuthGuard())
-export class SpaceController implements CrudController<SpaceDto> {
+export class SpaceController implements CrudController<SpacesEntity> {
   constructor(public service: SpaceService) { }
 
-  get base(): CrudController<SpaceDto> {
+  get base(): CrudController<SpacesEntity> {
     return this;
   }
 
   @Override()
   public createOne(@Req() request: Request, @ParsedRequest() req: CrudRequest,
-                   @ParsedBody() dto: SpaceDto) {
+                   @ParsedBody() dto: SpacesEntity) {
     const user = request.user;
     dto.user_id = user.id;
     return this.base.createOneBase(req, dto);

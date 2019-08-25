@@ -3,7 +3,13 @@ import {UserEntity} from './user.entity';
 import {BaseEntity} from './base.entity';
 import {ProjectsEntity} from './projects.entity';
 import {EnvironmentsEntity} from './environments.entity';
+import {IsNotEmpty, IsOptional, IsString, MaxLength, ValidateNested, ValidationOptions} from 'class-validator';
+import {ApiModelProperty, ApiModelPropertyOptional} from '@nestjs/swagger';
+import {CrudValidationGroups} from '@nestjsx/crud';
+import {Type} from 'class-transformer';
+import {UserIdOnlyDto} from '../dto/user-id-only.dto';
 
+const {CREATE, UPDATE} = CrudValidationGroups;
 @Entity({
   name: 'space',
 })
@@ -30,6 +36,11 @@ export class SpacesEntity extends BaseEntity {
   })
   'owner_id': number;
 
+  @IsOptional({groups: [UPDATE]} as ValidationOptions)
+  @IsString({always: true})
+  @IsNotEmpty({always: true})
+  @MaxLength(60, {always: true})
+  @ApiModelProperty()
   @Column({
     length: 60,
     comment: 'space name',
@@ -44,6 +55,9 @@ export class SpacesEntity extends BaseEntity {
   })
   creator: UserEntity;
 
+  @Type(() => UserIdOnlyDto)
+  @ValidateNested({always: true})
+  @ApiModelPropertyOptional({ type: UserIdOnlyDto, isArray: false})
   @ManyToOne( type => UserEntity, {
     nullable: true,
     cascade: true,
@@ -52,7 +66,7 @@ export class SpacesEntity extends BaseEntity {
     name: 'owner_id',
     referencedColumnName: 'id',
   })
-  owner: UserEntity;
+  owner?: UserEntity;
 
   @OneToMany(type => EnvironmentsEntity, environment => environment.space)
   environments: EnvironmentsEntity[];
