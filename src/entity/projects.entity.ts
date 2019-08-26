@@ -8,7 +8,7 @@ import {ProjectRepositoryEntity} from './project-repository.entity';
 import {ProjectEnvironmentEntity} from './project-environment.entity';
 import {ProjectDeployEntity} from './project-deploy.entity';
 import {
-  IsIn,
+  IsIn, IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -19,8 +19,8 @@ import {
 import { CrudValidationGroups } from '@nestjsx/crud';
 import {Exclude, Type} from 'class-transformer';
 import {ApiModelProperty} from '@nestjs/swagger';
-import {SpaceIdOnlyDto} from '../dto/space-id-only.dto';
 import {EnvironmentIdOnlyDto} from '../dto/environment-id-only.dto';
+import {ExistsEntity} from '../validator/ExistsEntityConstraint';
 
 const { CREATE, UPDATE } = CrudValidationGroups;
 
@@ -34,17 +34,21 @@ export class ProjectsEntity extends BaseEntity {
   })
   id: number;
 
-  @Exclude({
-    toClassOnly: true,
+  @IsOptional({groups: [UPDATE]} as ValidationOptions)
+  @IsNotEmpty({always: true})
+  @IsInt({always: true})
+  @ExistsEntity({
+    table: 'space',
+    columnName: 'id',
+  }, {
+    always: true,
   })
+  @ApiModelProperty()
   @Column({
     unsigned: true,
   })
   'space_id': number;
 
-  /*@Exclude({
-    toClassOnly: true,
-  })*/
   @Column({
     name: 'user_id',
     unsigned: true,
@@ -105,10 +109,6 @@ export class ProjectsEntity extends BaseEntity {
   })
   'require_review': YesOrNo;
 
-  @IsOptional({groups: [UPDATE]} as ValidationOptions)
-  @Type(() => SpaceIdOnlyDto)
-  @ValidateNested({always: true})
-  @ApiModelProperty()
   @ManyToOne(type => SpacesEntity, space => space.projects, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
@@ -117,7 +117,7 @@ export class ProjectsEntity extends BaseEntity {
     name: 'space_id',
     referencedColumnName: 'id',
   })
-  space: SpacesEntity;
+  space?: SpacesEntity;
 
   @Exclude({
     toClassOnly: true,
@@ -130,24 +130,10 @@ export class ProjectsEntity extends BaseEntity {
     name: 'user_id',
     referencedColumnName: 'id',
   })
-  creator: UserEntity;
+  creator?: UserEntity;
 
-  @Type(type => EnvironmentIdOnlyDto)
-  @ValidateNested({always: true})
-  @ApiModelProperty()
-  @OneToMany(type => ProjectEnvironmentEntity, projectEnvironment => projectEnvironment.project)
-  /*@JoinTable({
-    name: 'project_environment',
-    joinColumn: {
-      name: 'environment_id',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'project_id',
-      referencedColumnName: 'id',
-    },
-  })*/
-  environments: ProjectEnvironmentEntity[];
+  @OneToMany(type => ProjectEnvironmentEntity, projectEnvironment => projectEnvironment.project, {cascade: true})
+  environments?: ProjectEnvironmentEntity[];
 
   // @ManyToMany( type => ServersEntity)
   /*@JoinTable({
@@ -161,11 +147,11 @@ export class ProjectsEntity extends BaseEntity {
       referencedColumnName: 'id',
     },
   })*/
-  servers: ServersEntity[];
+  servers?: ServersEntity[];
 
   @OneToOne(type => ProjectRepositoryEntity, repository => repository.project)
-  repository: ProjectRepositoryEntity;
+  repository?: ProjectRepositoryEntity;
 
   @OneToMany(type => ProjectDeployEntity, deploy => deploy.project)
-  deploy: ProjectDeployEntity;
+  deploy?: ProjectDeployEntity;
 }

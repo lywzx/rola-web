@@ -39,11 +39,26 @@ export class EnvironmentsEntity extends BaseEntity {
   @IsString({ always: true})
   @MaxLength(60, {always: true})
   @Matches(/^[a-zA-Z][a-zA-Z0-9_]{2,59}$/, {always: true})
-  // TODO 验证需要判断空间ID
   @UniqueEntity({
     table: 'environment',
+    columnName: 'name',
+    whereDepColumn: {
+      space_id: 'space_id',
+    },
   }, {
-    always: true,
+    groups: [CREATE],
+  })
+  @UniqueEntity({
+    table: 'environment',
+    columnName: 'name',
+    whereDepColumn: {
+      space_id: 'space_id',
+    },
+    ignoreDepColumn: {
+      id: 'id',
+    },
+  }, {
+    groups: [UPDATE],
   })
   @ApiModelProperty()
   @Column({

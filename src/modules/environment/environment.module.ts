@@ -12,5 +12,6 @@ import {PassportModule} from '../../passport.module';
   ],
   controllers: [EnvironmentController],
   providers: [EnvironmentService],
+  exports: [EnvironmentService],
 })
 export class EnvironmentModule {}

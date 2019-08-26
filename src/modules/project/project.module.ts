@@ -15,6 +15,8 @@ import {ProjectEnvironmentSettingFileEntity} from '../../entity/project-environm
 import {ProjectRepositoryEntity} from '../../entity/project-repository.entity';
 import {SpacesEntity} from '../../entity/spaces.entity';
 import {UserEntity} from '../../entity/user.entity';
+import {EnvironmentsEntity} from '../../entity/environments.entity';
+import {EnvironmentService} from '../environment/environment/environment.service';
 
 @Module({
   imports: [ PassportModule,
@@ -27,11 +29,12 @@ import {UserEntity} from '../../entity/user.entity';
       ProjectEnvironmentDeployEntity,
       ProjectEnvironmentSettingFileEntity,
       ProjectRepositoryEntity,
+      EnvironmentsEntity,
       SpacesEntity,
       UserEntity,
     ]),
   ],
   controllers: [ProjectController, ProjectServerController],
-  providers: [ProjectServerService, ProjectService],
+  providers: [ProjectServerService, ProjectService, EnvironmentService],
 })
 export class ProjectModule {}
