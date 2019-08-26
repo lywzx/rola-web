@@ -6,7 +6,7 @@ import {ServersEntity} from './servers.entity';
 @Entity({
   name: 'project_server',
 })
-@Unique(['project_id', 'server_id', 'environment_id'])
+@Unique(['project_id', 'server_id'/*, 'environment_id'*/])
 export class ProjectServerEntity {
   @PrimaryGeneratedColumn({
     unsigned: true,
@@ -23,11 +23,11 @@ export class ProjectServerEntity {
   })
   'server_id': number;
 
-  @Column({
+  /*@Column({
     unsigned: true,
     nullable: true,
   })
-  'environment_id': number;
+  'environment_id': number;*/
 
   @ManyToOne(type => ProjectsEntity)
   @JoinColumn({
@@ -43,12 +43,12 @@ export class ProjectServerEntity {
   })
   server: ServersEntity;
 
-  @ManyToOne(type => EnvironmentsEntity, {
+  /*@ManyToOne(type => EnvironmentsEntity, {
     nullable: true,
   })
   @JoinColumn({
     name: 'environment_id',
     referencedColumnName: 'id',
   })
-  environment: EnvironmentsEntity;
+  environment: EnvironmentsEntity;*/
 }

@@ -18,8 +18,10 @@ import {
 } from 'lodash';
 import {Type} from 'class-transformer';
 import {TagIdOnlyDto} from '../dto/tag-id-only.dto';
+import {ProjectsEntity} from './projects.entity';
 
 const {CREATE, UPDATE} = CrudValidationGroups;
+
 @Entity({
   name: 'server',
 })
@@ -103,7 +105,7 @@ export class ServersEntity extends BaseEntity {
     length: 62,
     nullable: true,
   })
-  'password': string;
+  password: string;
 
   @IsOptional({always: true})
   @IsString({ always: true})
@@ -167,4 +169,7 @@ export class ServersEntity extends BaseEntity {
     },
   })
   tags: TagsEntity[];
+
+  @ManyToMany( type => ProjectsEntity, (project) => project.servers)
+  projects: ProjectsEntity[];
 }

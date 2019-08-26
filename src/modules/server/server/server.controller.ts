@@ -23,7 +23,10 @@ import {UserEntity} from '../../../entity/user.entity';
         eager: true,
       },
       spaces: {
-        eager: true,
+        eager: false,
+      },
+      projects: {
+        eager: false,
       },
     },
   },

@@ -135,8 +135,8 @@ export class ProjectsEntity extends BaseEntity {
   @OneToMany(type => ProjectEnvironmentEntity, projectEnvironment => projectEnvironment.project, {cascade: true})
   environments?: ProjectEnvironmentEntity[];
 
-  // @ManyToMany( type => ServersEntity)
-  /*@JoinTable({
+  @ManyToMany( type => ServersEntity, server => server.projects)
+  @JoinTable({
     name: 'project_server',
     joinColumn: {
       name: 'server_id',
@@ -146,7 +146,7 @@ export class ProjectsEntity extends BaseEntity {
       name: 'project_id',
       referencedColumnName: 'id',
     },
-  })*/
+  })
   servers?: ServersEntity[];
 
   @OneToOne(type => ProjectRepositoryEntity, repository => repository.project)
