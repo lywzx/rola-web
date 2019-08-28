@@ -20,7 +20,7 @@ import {UserEntity} from '../../../entity/user.entity';
         eager: false,
       },
       tags: {
-        eager: true,
+        eager: false,
       },
       spaces: {
         eager: false,

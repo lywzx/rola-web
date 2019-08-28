@@ -19,6 +19,7 @@ import {
 import {Type} from 'class-transformer';
 import {TagIdOnlyDto} from '../dto/tag-id-only.dto';
 import {ProjectsEntity} from './projects.entity';
+import {SpaceIdOnlyDto} from '../dto/space-id-only.dto';
 
 const {CREATE, UPDATE} = CrudValidationGroups;
 
@@ -118,7 +119,7 @@ export class ServersEntity extends BaseEntity {
   })
   description: string;
 
-  @IsOptional()
+  @IsOptional({always: true})
   @IsIn([YesOrNo.yes, YesOrNo.no])
   @ApiModelProperty()
   @Column({
@@ -128,7 +129,10 @@ export class ServersEntity extends BaseEntity {
   })
   lock: YesOrNo;
 
-  @ManyToMany( type => SpacesEntity)
+  @IsOptional({always: true})
+  @Type(type => SpaceIdOnlyDto)
+  @ValidateNested({always: true})
+  @ManyToMany( type => SpacesEntity, space => space.servers)
   @JoinTable({
     name: 'space_server',
     joinColumn: {

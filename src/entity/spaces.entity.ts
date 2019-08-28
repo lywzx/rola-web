@@ -1,4 +1,4 @@
-import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {UserEntity} from './user.entity';
 import {BaseEntity} from './base.entity';
 import {ProjectsEntity} from './projects.entity';
@@ -6,8 +6,9 @@ import {EnvironmentsEntity} from './environments.entity';
 import {IsNotEmpty, IsOptional, IsString, MaxLength, ValidateNested, ValidationOptions} from 'class-validator';
 import {ApiModelProperty, ApiModelPropertyOptional} from '@nestjs/swagger';
 import {CrudValidationGroups} from '@nestjsx/crud';
-import {Type} from 'class-transformer';
+import {serialize, Type} from 'class-transformer';
 import {UserIdOnlyDto} from '../dto/user-id-only.dto';
+import {ServersEntity} from './servers.entity';
 
 const {CREATE, UPDATE} = CrudValidationGroups;
 @Entity({
@@ -71,5 +72,12 @@ export class SpacesEntity extends BaseEntity {
   @OneToMany(type => EnvironmentsEntity, environment => environment.space)
   environments: EnvironmentsEntity[];
 
+  @OneToMany(type => ProjectsEntity, project => project.space, {cascade: true})
   projects: ProjectsEntity[];
+
+  @Type(type => ServersEntity)
+  @ManyToMany(type => ServersEntity, server => server.spaces, {
+    cascade: true,
+  })
+  servers: ServersEntity[];
 }
