@@ -15,5 +15,6 @@ import {PassportModule} from '../../passport.module';
   ],
   controllers: [ServerController, TagController],
   providers: [ServerService, TagService ],
+  exports: [ServerService],
 })
 export class ServerModule {}

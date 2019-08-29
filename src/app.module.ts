@@ -7,7 +7,6 @@ import { SpaceModule } from './modules/space/space.module';
 import { EnvironmentModule } from './modules/environment/environment.module';
 import { ProjectModule } from './modules/project/project.module';
 import { PeopleManageModule } from './modules/people-manage/people-manage.module';
-import {UserService} from './modules/auth/user/user.service';
 import { ServerModule } from './modules/server/server.module';
 import {config} from './util/helper';
 import { ShareModule } from './modules/share/share.module';
@@ -24,7 +23,7 @@ import { ShareModule } from './modules/share/share.module';
     ShareModule,
   ],
   controllers: [AppController],
-  providers: [AppService, UserService],
+  providers: [AppService],
   exports: [AuthModule],
 })
 export class AppModule {}

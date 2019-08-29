@@ -43,6 +43,6 @@ export class UserController implements CrudController<UserDto> {
   @Override()
   replaceOnBase(@ParsedRequest() req: CrudRequest,
                 @ParsedBody() dto: UserDto) {
-    return this.base.replaceOnBase(req, dto);
+    return this.base.replaceOneBase(req, dto);
   }
 }

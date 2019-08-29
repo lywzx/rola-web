@@ -17,6 +17,10 @@ import {SpacesEntity} from '../../entity/spaces.entity';
 import {UserEntity} from '../../entity/user.entity';
 import {EnvironmentsEntity} from '../../entity/environments.entity';
 import {EnvironmentService} from '../environment/environment/environment.service';
+import { ProjectRepositoryController } from './repository/repository.controller';
+import { ProjectRepositoryService } from './repository/repository.service';
+import {ServerService} from '../server/server/server.service';
+import {ServersEntity} from '../../entity/servers.entity';
 
 @Module({
   imports: [ PassportModule,
@@ -31,10 +35,11 @@ import {EnvironmentService} from '../environment/environment/environment.service
       ProjectRepositoryEntity,
       EnvironmentsEntity,
       SpacesEntity,
+      ServersEntity,
       UserEntity,
     ]),
   ],
-  controllers: [ProjectController, ProjectServerController],
-  providers: [ProjectServerService, ProjectService, EnvironmentService],
+  controllers: [ProjectController, ProjectServerController, ProjectRepositoryController],
+  providers: [ProjectServerService, ProjectService, EnvironmentService, ProjectRepositoryService, ServerService],
 })
 export class ProjectModule {}
