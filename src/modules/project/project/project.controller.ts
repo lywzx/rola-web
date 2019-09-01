@@ -29,6 +29,9 @@ import {ProjectEnvironmentEntity} from '../../../entity/project-environment.enti
       creator: {
         eager: false,
       },
+      repository: {
+        eager: false,
+      },
     },
   },
 })

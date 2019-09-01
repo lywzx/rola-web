@@ -6,6 +6,9 @@ import {ApiUseTags} from '@nestjs/swagger';
 import {AuthGuard} from '@nestjs/passport';
 import { Request } from 'express';
 import {UserEntity} from '../../../entity/user.entity';
+import {ProjectsEntity} from '../../../entity/projects.entity';
+import {RouterEntity} from '../../../decorator/RouterEntity';
+import {getConnection} from 'typeorm';
 
 @ApiUseTags('project/:projectId/repository')
 @Crud({
@@ -41,15 +44,23 @@ export class ProjectRepositoryController implements CrudController<ProjectReposi
   public constructor(public service: ProjectRepositoryService) {}
 
   @Override()
-  createOne(
+  async createOne(
     @ParsedRequest() req: CrudRequest,
     @ParsedBody() dto: ProjectRepositoryEntity,
     @Req() request: Request,
-    @Param('projectId', new ParseIntPipe()) ProjectId: number,
+    @RouterEntity(ProjectsEntity, 'projectId') project: ProjectsEntity,
   ) {
     const user = request.user as UserEntity;
     dto.user_id = user.id;
-    dto.project_id = ProjectId;
+    dto.project_id = project.id;
+    const repository = await getConnection()
+      .createQueryBuilder()
+      .relation(ProjectsEntity, 'repository')
+      .of(project)
+      .loadOne<ProjectRepositoryEntity>();
+    if (repository) {
+      dto.id = repository.id;
+    }
     return this.base.createOneBase(req, dto);
   }
 }
