@@ -3,6 +3,10 @@ import {ProjectRepositoryOnlineLogo, ProjectRepositoryType} from './options';
 import {BaseEntity} from './base.entity';
 import {ProjectsEntity} from './projects.entity';
 import {UserEntity} from './user.entity';
+import {IsIn, IsNotEmpty, IsOptional, IsString, Matches, Validate} from 'class-validator';
+import {CrudValidationGroups} from '@nestjsx/crud';
+
+const {CREATE, UPDATE} = CrudValidationGroups;
 
 @Entity({
   name: 'project_repository',
@@ -25,6 +29,9 @@ export class ProjectRepositoryEntity extends BaseEntity {
   })
   'project_id': number;
 
+  @IsOptional({always: true})
+  @IsNotEmpty({always: true})
+  @IsIn([ProjectRepositoryType.git, ProjectRepositoryType.svn], {always: true})
   @Column({
     type: 'enum',
     enum: ProjectRepositoryType,
@@ -33,6 +40,15 @@ export class ProjectRepositoryEntity extends BaseEntity {
   })
   type: ProjectRepositoryType;
 
+  @IsOptional({groups: [UPDATE]})
+  @IsNotEmpty({always: true})
+  @IsString({always: true})
+  @Validate((value: string) => {
+    console.log(value, '11111111111111111111111111111111111111111111111')
+    return false;
+  }, {
+    always: true,
+  })
   @Column({
     length: 300,
     default: '',
