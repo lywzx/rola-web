@@ -1,9 +1,9 @@
-import {Factory, Seed, times} from 'typeorm-seeding';
+import {Factory, Seeder, times} from 'typeorm-seeding';
 import {Connection} from 'typeorm';
 import {TagsEntity} from '../../src/entity/tags.entity';
 
-export default class TagCreateSeed implements Seed {
-  public async seed(factory: Factory, connection: Connection): Promise<any> {
+export default class TagCreateSeed implements Seeder {
+  public async run(factory: Factory, connection: Connection): Promise<any> {
     const entityManage = connection.createEntityManager();
     const data = [
       {

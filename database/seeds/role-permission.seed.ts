@@ -1,4 +1,4 @@
-import {Seed} from 'typeorm-seeding';
+import {Seeder} from 'typeorm-seeding';
 import {Connection, ObjectType} from 'typeorm';
 import {EntityFactory} from 'typeorm-seeding/dist/entity-factory';
 import {
@@ -14,7 +14,7 @@ import {RolesEntity} from '../../src/entity/roles.entity';
 import {PermissionsEntity} from '../../src/entity/permissions.entity';
 import {PermissionRoleEntity} from '../../src/entity/permission-role.entity';
 
-export default class RolePermissionSeed implements Seed {
+export default class RolePermissionSeed implements Seeder {
 
   private readonly roles = [
     {
@@ -44,7 +44,7 @@ export default class RolePermissionSeed implements Seed {
     },
   ];
 
-  async seed(
+  async run(
     factory: <Entity, Settings>(entity: ObjectType<Entity>) => (settings?: Settings) => EntityFactory<Entity, Settings>,
     connection: Connection,
   ): Promise<any> {
