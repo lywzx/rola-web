@@ -3,7 +3,7 @@ import {ProjectRepositoryOnlineLogo, ProjectRepositoryType} from './options';
 import {BaseEntity} from './base.entity';
 import {ProjectsEntity} from './projects.entity';
 import {UserEntity} from './user.entity';
-import {IsIn, IsNotEmpty, IsOptional, IsString, Matches, Validate} from 'class-validator';
+import {IsIn, IsNotEmpty, IsOptional, IsString, Matches, MaxLength, ValidateIf} from 'class-validator';
 import {CrudValidationGroups} from '@nestjsx/crud';
 
 const {CREATE, UPDATE} = CrudValidationGroups;
@@ -43,10 +43,7 @@ export class ProjectRepositoryEntity extends BaseEntity {
   @IsOptional({groups: [UPDATE]})
   @IsNotEmpty({always: true})
   @IsString({always: true})
-  @Validate((value: string) => {
-    console.log(value, '11111111111111111111111111111111111111111111111')
-    return false;
-  }, {
+  @Matches(/((git@|http(s)?:\/\/)([\w\.@]+)(\/|:))([\w,\-,\_]+)\/([\w,\-,\_]+)(.git){0,1}((\/){0,1})/, {
     always: true,
   })
   @Column({
@@ -54,9 +51,40 @@ export class ProjectRepositoryEntity extends BaseEntity {
     default: '',
     comment: 'git or svn url',
     charset: 'utf8mb4',
+    transformer: {
+      to(value: any): any {
+        return value;
+      },
+      from(value: any): any {
+        // 需要隐藏用户名及密码
+        return value;
+      },
+    },
   })
   url: string;
 
+  @ValidateIf((data: ProjectRepositoryEntity, value: string|undefined) => !!data.password, {always: true})
+  @IsString({always: true})
+  @MaxLength(80, {always: true})
+  @Column({
+    length: 80,
+    default: '',
+    comment: 'git http or https user name',
+  })
+  'user_name'?: string;
+
+  @ValidateIf((data: ProjectRepositoryEntity, value: string|undefined) => !!data.user_name, {always: true})
+  @IsString({always: true})
+  @MaxLength(80, {always: true})
+  @Column({
+    length: 80,
+    default: '',
+    comment: 'git http or https password',
+  })
+  'password'?: string;
+
+  @IsOptional({always: true})
+  @IsIn([ProjectRepositoryOnlineLogo.branch, ProjectRepositoryOnlineLogo.tag], {always: true})
   @Column({
     type: 'enum',
     enum: ProjectRepositoryOnlineLogo,
@@ -64,6 +92,12 @@ export class ProjectRepositoryEntity extends BaseEntity {
   })
   'online_logo': ProjectRepositoryOnlineLogo;
 
+  @IsOptional({always: true})
+  @IsString({always: true})
+  @IsNotEmpty({always: true})
+  @Matches(/^[a-zA-Z][a-zA-Z0-9_]{2,30}$/, {
+    always: true,
+  })
   @Column({
     length: 30,
     name: 'default_branch',
@@ -72,6 +106,8 @@ export class ProjectRepositoryEntity extends BaseEntity {
   })
   'default_branch': string;
 
+  @IsOptional({always: true})
+  @IsString({always: true})
   @Column({
     length: 400,
     default: '',

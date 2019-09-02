@@ -46,6 +46,20 @@ export class ProjectRepositoryCreateTable1567055746450 implements MigrationInter
           comment: 'the project repository url',
         },
         {
+          name: 'user_name',
+          type: 'varchar',
+          length: '80',
+          default: '""',
+          comment: 'git http or https user name',
+        },
+        {
+          name: 'password',
+          type: 'varchar',
+          length: '80',
+          default: '""',
+          comment: 'git http or https password',
+        },
+        {
           name: 'online_logo',
           type: 'enum',
           enum: [ProjectRepositoryOnlineLogo.tag, ProjectRepositoryOnlineLogo.branch],

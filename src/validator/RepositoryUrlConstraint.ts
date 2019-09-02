@@ -7,7 +7,7 @@ import {EntityConstraintOptions} from './EntityConstraintOptions';
 })
 export class RepositoryUrlConstraint implements ValidatorConstraintInterface {
   defaultMessage(validationArguments?: ValidationArguments): string {
-    return '';
+    return 'url is not validated';
   }
 
   validate(value: any, validationArguments?: ValidationArguments): Promise<boolean> | boolean {

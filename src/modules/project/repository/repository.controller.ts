@@ -26,6 +26,9 @@ import {getConnection} from 'typeorm';
     },
   },
   query: {
+    exclude: [
+      'user_name', 'password',
+    ],
     join: {
       projects: {
         eager: true,
@@ -58,9 +61,16 @@ export class ProjectRepositoryController implements CrudController<ProjectReposi
       .relation(ProjectsEntity, 'repository')
       .of(project)
       .loadOne<ProjectRepositoryEntity>();
+
     if (repository) {
       dto.id = repository.id;
     }
+
+    if ( !/https?/.test(dto.url) ) {
+      dto.user_name = '';
+      dto.password  = '';
+    }
+
     return this.base.createOneBase(req, dto);
   }
 }
