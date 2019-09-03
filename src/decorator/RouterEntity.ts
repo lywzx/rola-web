@@ -7,11 +7,11 @@ export const RouterEntity = createParamDecorator(async (data, req) => {
     data = [data, Object.keys(req.params)[0]];
   }
 
-  const [type, param] = data;
+  const [type, param, columnName = 'id'] = data;
   const value = req.params[param];
   const query = {};
 
-  query[param] = value;
+  query[columnName] = value;
   const connection = getConnection();
   let typeReopsitory = type;
   if (!isFunction(typeReopsitory.findOne)) {

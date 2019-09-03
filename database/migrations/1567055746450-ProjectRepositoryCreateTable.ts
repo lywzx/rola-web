@@ -29,6 +29,7 @@ export class ProjectRepositoryCreateTable1567055746450 implements MigrationInter
           name: 'project_id',
           type: 'int',
           unsigned: true,
+          isUnique: true,
           comment: 'repository belong to project',
         },
         {

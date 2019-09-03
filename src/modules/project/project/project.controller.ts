@@ -31,6 +31,7 @@ import {ProjectEnvironmentEntity} from '../../../entity/project-environment.enti
       },
       repository: {
         eager: false,
+        exclude: ['user_name', 'password'],
       },
     },
   },

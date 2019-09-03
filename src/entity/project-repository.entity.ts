@@ -43,7 +43,7 @@ export class ProjectRepositoryEntity extends BaseEntity {
   @IsOptional({groups: [UPDATE]})
   @IsNotEmpty({always: true})
   @IsString({always: true})
-  @Matches(/((git@|http(s)?:\/\/)([\w\.@]+)(\/|:))([\w,\-,\_]+)\/([\w,\-,\_]+)(.git){0,1}((\/){0,1})/, {
+  @Matches(/((^git@|^http(s)?:\/\/)([\w\.@]+)(\/|:))([\w,\-,\_]+)\/([\w,\-,\_]+)(.git){0,1}((\/){0,1})/, {
     always: true,
   })
   @Column({
@@ -115,9 +115,7 @@ export class ProjectRepositoryEntity extends BaseEntity {
   })
   destination: string;
 
-  @OneToOne(type => ProjectsEntity, project => project.repository, {
-    nullable: true,
-  })
+  @OneToOne(type => ProjectsEntity, project => project.repository)
   @JoinColumn({
     name: 'project_id',
     referencedColumnName: 'id',

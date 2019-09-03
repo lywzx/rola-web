@@ -1,4 +1,4 @@
-import {IsIn, IsInt, IsNotEmpty, IsOptional, IsString, MaxLength, ValidationOptions} from 'class-validator';
+import {IsArray, IsIn, IsInt, IsNotEmpty, IsOptional, IsString, MaxLength, ValidationOptions} from 'class-validator';
 import {ExistsEntity} from '../../../validator/ExistsEntityConstraint';
 import {ApiModelProperty} from '@nestjs/swagger';
 import {CrudValidationGroups} from '@nestjsx/crud';
@@ -38,10 +38,17 @@ export class ProjectCreateDto {
   status: ProjectStatusOptions;
 
   @IsOptional({always: true})
+  @IsString({always: true})
   @IsIn([YesOrNo.yes, YesOrNo.no], {always: true})
   'require_review': YesOrNo;
 
   @IsOptional({
+    always: true,
+  })
+  @IsArray({
+    always: true,
+  })
+  @IsNotEmpty({
     always: true,
   })
   @ApiModelProperty()

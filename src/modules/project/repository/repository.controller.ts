@@ -66,7 +66,7 @@ export class ProjectRepositoryController implements CrudController<ProjectReposi
       dto.id = repository.id;
     }
 
-    if ( !/https?/.test(dto.url) ) {
+    if ( !/^https?/.test(dto.url) ) {
       dto.user_name = '';
       dto.password  = '';
     }
